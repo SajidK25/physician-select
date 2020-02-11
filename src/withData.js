@@ -8,8 +8,8 @@ const cache = new InMemoryCache();
 // const endpoint = prod_endpoint;
 //const endpoint = dev_endpoint;
 
-const endpoint =
-  process.env.NODE_ENV === "development" ? dev_endpoint : prod_endpoint;
+const endpoint = prod_endpoint;
+//  process.env.NODE_ENV === "development" ? dev_endpoint : prod_endpoint;
 
 const httpLink = createHttpLink({
   uri: endpoint,

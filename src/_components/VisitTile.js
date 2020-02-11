@@ -59,7 +59,10 @@ export const VisitTile = props => {
       <Typography className={classes.name}>
         {`${visit.user.lastName}, ${visit.user.firstName}`}
       </Typography>
-      <Typography className={classes.date}>
+      <Typography
+        color={timeDeadline > 0 ? "error" : ""}
+        className={classes.date}
+      >
         {moment(visit.createdAt).fromNow()}
       </Typography>
     </Paper>
