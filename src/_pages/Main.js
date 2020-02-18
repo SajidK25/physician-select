@@ -9,16 +9,18 @@ import { PleaseSignIn, Dashboard, VisitDetail } from "../_components";
 export const Main = props => {
   return (
     <Layout>
-      {/* <PleaseSignIn> */}
       <Switch>
         <Route exact path="/">
-          <Dashboard />
+          <PleaseSignIn>
+            <Dashboard />
+          </PleaseSignIn>
         </Route>
         <Route path="/visit/:id">
-          <VisitDetail />
+          <PleaseSignIn>
+            <VisitDetail />
+          </PleaseSignIn>
         </Route>
       </Switch>
-      {/* </PleaseSignIn> */}
     </Layout>
   );
 };

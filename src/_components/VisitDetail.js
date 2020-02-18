@@ -23,6 +23,7 @@ const GET_VISIT = gql`
           city
           state
           telephone
+          zipcode
         }
       }
     }

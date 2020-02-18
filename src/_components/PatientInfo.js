@@ -9,6 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import moment from "moment";
 import { drugDisplaySetup } from "../_helpers";
+import { ShowPhoto, ChangeEd } from "../_components";
+
 // import { formatMoney } from "../_helpers";
 
 const UPDATE_VISIT = gql`
@@ -73,11 +75,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14,
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(4)
-  },
-  idImage: {
-    marginLeft: theme.spacing(0.5),
-    marginRight: theme.spacing(1),
-    width: "50%"
   },
   age: {
     fontSize: 18,
@@ -150,14 +147,7 @@ const TreatmentPlan = ({ visit }) => {
       >
         Decline
       </Button>
-      <Button
-        className={classes.button}
-        color="primary"
-        variant="outlined"
-        fullWidth={true}
-      >
-        Change
-      </Button>
+      <ChangeEd visit={visit} />
       <Button
         className={classes.button}
         color="primary"
@@ -195,8 +185,9 @@ export const PatientInfo = props => {
         <Typography variant="h4" className={classes.name}>
           {`${visit.user.lastName}, ${visit.user.firstName}`}
         </Typography>
+        <ShowPhoto photoId={visit.user.photoId} />
         <Typography variant="h5" className={classes.address}>
-          {`${visit.user.addresses[0].city}, ${visit.user.addresses[0].state}`}
+          {`${visit.user.addresses[0].city}, ${visit.user.addresses[0].state} ${visit.user.addresses[0].zipcode} `}
         </Typography>
         <Typography variant="h5" className={classes.address}>
           {visit.user.addresses[0].telephone}

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import { Logout, User } from "./";
 
 const useStyles = makeStyles({
   root: {
@@ -18,13 +18,21 @@ export const Header = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Physician Dashboard
-        </Typography>
-        <Button color="inherit">Logout</Button>
-      </Toolbar>
-    </AppBar>
+    <User>
+      {({ data }) => {
+        const me = data ? data.physician : null;
+        console.log("ME", data);
+        return (
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" className={classes.title}>
+                Physician Dashboard
+              </Typography>
+              {me && <Logout />}
+            </Toolbar>
+          </AppBar>
+        );
+      }}
+    </User>
   );
 };

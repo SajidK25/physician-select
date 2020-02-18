@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import { VisitTile, Loading } from "./";
+import { ErrorMessage, VisitTile, Loading } from "./";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,7 +52,7 @@ export const Visits = () => {
   const classes = useStyles();
 
   if (loading) return <Loading />;
-  if (error) return <p>ERROR!</p>;
+  if (error) return <ErrorMessage error={error} />;
   if (!data) return <p>No new visits</p>;
 
   console.log("Data:", data);
