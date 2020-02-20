@@ -14,10 +14,8 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-export const useMe = () => {
-  const { data } = useQuery(CURRENT_USER_QUERY);
+export const useAuth = () => {
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
 
-  if (!data) return null;
-
-  return data.physician;
+  return { data, loading, error };
 };

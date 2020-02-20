@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { ErrorMessage, VisitTile, Loading } from "./";
+import { useAuth } from "../_components";
 
 const useStyles = makeStyles(theme => ({
   root: {

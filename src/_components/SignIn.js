@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Form, Field } from "react-final-form";
-import { Mutation } from "@apollo/react-components";
 import gql from "graphql-tag";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -59,11 +58,14 @@ const validate = values => {
 export const SignIn = props => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
+
+  const { from } = location.state || { from: { pathname: "/" } };
   const [login, { data, loading, error }] = useMutation(SIGNIN_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
     onCompleted() {
       console.log("Complete");
-      history.push("/");
+      history.replace(from);
     },
     onError(error) {
       console.log(error);
