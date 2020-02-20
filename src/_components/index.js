@@ -1,6 +1,5 @@
 export * from "./Layout";
 export * from "./Header";
-export * from "./PleaseSignIn";
 export * from "./SignIn";
 export * from "./Dashboard";
 export * from "./Visits";
@@ -20,3 +19,4 @@ export * from "./ShowPhoto";
 export * from "./RenderSelect";
 export * from "./SelectField";
 export * from "./ChangeEd";
+export * from "./useMe";

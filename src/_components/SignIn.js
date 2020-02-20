@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/react-hooks";
+import { useHistory } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { Mutation } from "@apollo/react-components";
 import gql from "graphql-tag";
 import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -14,6 +17,15 @@ const useStyles = makeStyles(theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1)
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    maxWidth: 500,
+    marginLeft: "auto",
+    marginRight: "auto",
+    flexDirection: "column",
+    alignItems: "center"
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
@@ -46,20 +58,21 @@ const validate = values => {
 
 export const SignIn = props => {
   const classes = useStyles();
+  const history = useHistory();
+  const [login, { data, loading, error }] = useMutation(SIGNIN_MUTATION, {
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    onCompleted() {
+      console.log("Complete");
+      history.push("/");
+    },
+    onError(error) {
+      console.log(error);
+    }
+  });
 
   return (
-    <Mutation
-      mutation={SIGNIN_MUTATION}
-      refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-      onCompleted={() => {
-        console.log("Complete");
-        // history.push({ to });
-      }}
-      onError={error => {
-        console.log(error);
-      }}
-    >
-      {(login, { error, loading }) => (
+    <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
         <Form
           initialValues={{ email: "", password: "" }}
           validate={validate}
@@ -113,7 +126,7 @@ export const SignIn = props => {
             </form>
           )}
         </Form>
-      )}
-    </Mutation>
+      </div>
+    </Container>
   );
 };
