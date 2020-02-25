@@ -7,16 +7,19 @@ export const PrivateRoute = ({ children, ...rest }) => {
     <User>
       {({ data }) => {
         const me = data ? data.physician : null;
+        console.log("ME:", me);
+
         return (
           <Route
             {...rest}
-            render={() =>
+            render={({ location }) =>
               me ? (
                 children
               ) : (
                 <Redirect
                   to={{
-                    pathname: "/"
+                    pathname: "/login",
+                    state: { from: location }
                   }}
                 />
               )

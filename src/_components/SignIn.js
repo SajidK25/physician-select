@@ -63,9 +63,9 @@ export const SignIn = props => {
   const { from } = location.state || { from: { pathname: "/" } };
   const [login, { data, loading, error }] = useMutation(SIGNIN_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    awaitRefetchQueries: true,
     onCompleted() {
       console.log("Complete");
-      history.push("/");
     },
     onError(error) {
       console.log(error);
@@ -80,6 +80,7 @@ export const SignIn = props => {
           validate={validate}
           onSubmit={async (values, form) => {
             await login({ variables: { ...values } });
+            history.replace(from);
           }}
         >
           {({ handleSubmit }) => (

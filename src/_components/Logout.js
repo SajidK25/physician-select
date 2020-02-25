@@ -17,7 +17,7 @@ export const Logout = () => {
   const [logout] = useMutation(LOGOUT_MUTATION, {
     onCompleted() {
       console.log("Logout Complete");
-      history.push("/login");
+      history.push("/");
     },
     refetchQueries: [{ query: CURRENT_USER_QUERY }]
   });

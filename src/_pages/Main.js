@@ -7,7 +7,8 @@ export const Main = props => {
   return (
     <Layout>
       <Switch>
-        <PrivateRoute exact path="/">
+        <Redirect from="/" exact to="/dashboard" />
+        <PrivateRoute path="/dashboard">
           <Dashboard />
         </PrivateRoute>
         <PrivateRoute path="/visit/:id">
