@@ -11,6 +11,8 @@ const cache = new InMemoryCache();
 const endpoint =
   process.env.NODE_ENV === "development" ? dev_endpoint : prod_endpoint;
 
+console.log("endpoint:", endpoint);
+
 const httpLink = createHttpLink({
   uri: endpoint,
   credentials: "include"
