@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { ErrorMessage, VisitTile, Loading } from "./";
-import { useAuth } from "../_components";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,7 +47,7 @@ const GET_VISITS = gql`
 
 export const Visits = () => {
   const { data, loading, error, fetchMore } = useQuery(GET_VISITS, {
-    pollInterval: 500
+    pollInterval: 1500
   });
   const classes = useStyles();
 
@@ -57,6 +56,7 @@ export const Visits = () => {
   if (!data) return <p>No new visits</p>;
 
   console.log("Data:", data);
+
   return (
     <div className={classes.container}>
       {data.visits &&

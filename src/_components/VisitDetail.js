@@ -39,7 +39,6 @@ export const VisitDetail = () => {
   if (loading) return <Loading />;
   if (error) return <p>ERROR!</p>;
   if (!data) return <p>Not Found!</p>;
-  console.log("Data:", data);
 
   return (
     <>

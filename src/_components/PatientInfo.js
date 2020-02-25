@@ -96,7 +96,6 @@ const TreatmentPlan = ({ visit }) => {
   });
 
   const displayOptions = drugDisplaySetup(subscription);
-  console.log("displayOptions:", displayOptions);
 
   return (
     <Paper className={classes.treatmentPlan}>

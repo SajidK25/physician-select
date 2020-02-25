@@ -19,5 +19,4 @@ export * from "./ShowPhoto";
 export * from "./RenderSelect";
 export * from "./SelectField";
 export * from "./ChangeEd";
-export * from "./Auth";
 export * from "./PrivateRoute";

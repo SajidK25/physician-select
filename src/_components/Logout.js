@@ -15,15 +15,15 @@ export const Logout = () => {
   const history = useHistory();
 
   const [logout] = useMutation(LOGOUT_MUTATION, {
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
     onCompleted() {
       console.log("Logout Complete");
-      history.push("/");
-    }
+      history.push("/login");
+    },
+    refetchQueries: [{ query: CURRENT_USER_QUERY }]
   });
 
   return (
-    <Button onClick={() => logout()} color="inherit" align="center">
+    <Button onClick={async () => await logout()} color="inherit" align="center">
       Logout
     </Button>
   );

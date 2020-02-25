@@ -21,7 +21,6 @@ export const Header = () => {
     <User>
       {({ data }) => {
         const me = data ? data.physician : null;
-        console.log("ME", data);
         return (
           <AppBar position="static">
             <Toolbar>

@@ -43,14 +43,11 @@ export const VisitTile = props => {
     moment(visit.createdAt).add(1440, "minutes"),
     "minutes"
   );
-  console.log("Time diff:", timeDeadline);
-  console.log("Visit!:", visit);
   return (
     <Paper
       className={classes.paper}
       onClick={() => {
         history.push("/visit/" + visit.id);
-        console.log("Clicked", visit.id);
       }}
     >
       {visit.type === "ED" ? (
