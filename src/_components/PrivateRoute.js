@@ -24,7 +24,7 @@ export const PrivateRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        data ? (
+        data && data.physician ? (
           children
         ) : (
           <Redirect
