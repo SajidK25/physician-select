@@ -88,6 +88,7 @@ export const SignIn = props => {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
+              <Typography variant="h5">From: {JSON.stringify(from)}</Typography>
               <ErrorMessage error={error} />
               <Field
                 component={RenderStdTextField}
