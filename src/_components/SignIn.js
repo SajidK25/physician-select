@@ -65,7 +65,7 @@ export const SignIn = props => {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
     onCompleted() {
       console.log("Complete");
-      history.replace("/");
+      history.push("/");
     },
     onError(error) {
       console.log(error);

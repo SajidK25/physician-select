@@ -7,15 +7,15 @@ export const Main = props => {
   return (
     <Layout>
       <Switch>
-        <Route path="/login">
-          <SignIn />
-        </Route>
         <PrivateRoute exact path="/">
           <Dashboard />
         </PrivateRoute>
         <PrivateRoute path="/visit/:id">
           <VisitDetail />
         </PrivateRoute>
+        <Route path="/login">
+          <SignIn />
+        </Route>
       </Switch>
     </Layout>
   );
