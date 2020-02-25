@@ -80,7 +80,7 @@ export const SignIn = props => {
           validate={validate}
           onSubmit={async (values, form) => {
             await login({ variables: { ...values } });
-            history.replace(from);
+            //  history.replace(from);
           }}
         >
           {({ handleSubmit }) => (
