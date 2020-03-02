@@ -1,9 +1,11 @@
 import React from "react";
+import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { Logout, User } from "./";
+import { Logout } from "./";
+import { ME_QUERY } from "../Graphql";
 
 const useStyles = makeStyles({
   root: {
@@ -16,22 +18,17 @@ const useStyles = makeStyles({
 
 export const Header = () => {
   const classes = useStyles();
+  const { data } = useQuery(ME_QUERY);
 
+  const me = data ? data.me : null;
   return (
-    <User>
-      {({ data }) => {
-        const me = data ? data.physician : null;
-        return (
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                Physician Dashboard
-              </Typography>
-              {me && <Logout />}
-            </Toolbar>
-          </AppBar>
-        );
-      }}
-    </User>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" className={classes.title}>
+          Physician Dashboard
+        </Typography>
+        {me && <Logout />}
+      </Toolbar>
+    </AppBar>
   );
 };

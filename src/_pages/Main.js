@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { Layout, SignIn, PrivateRoute } from "../_components";
+import { Layout, Login, PrivateRoute } from "../_components";
 import { Dashboard, VisitDetail } from "../_components";
 
 export const Main = props => {
@@ -15,7 +15,7 @@ export const Main = props => {
           <VisitDetail />
         </PrivateRoute>
         <Route path="/login">
-          <SignIn />
+          <Login />
         </Route>
       </Switch>
     </Layout>

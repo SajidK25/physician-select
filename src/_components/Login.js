@@ -2,7 +2,6 @@ import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory, useLocation } from "react-router-dom";
 import { Form, Field } from "react-final-form";
-import gql from "graphql-tag";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -10,7 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { RenderStdTextField, ErrorMessage } from "./";
-import { CURRENT_USER_QUERY } from "./User";
+import { setAccessToken } from "../accessToken";
+import { ME_QUERY, LOGIN_MUTATION } from "../Graphql";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -31,16 +31,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-      firstName
-    }
-  }
-`;
-
 const validate = values => {
   const errors = {};
   if (!values.password) {
@@ -55,22 +45,13 @@ const validate = values => {
   return errors;
 };
 
-export const SignIn = props => {
+export const Login = props => {
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
+  // const location = useLocation();
+  // const { from } = location.state || { from: { pathname: "/" } };
 
-  const { from } = location.state || { from: { pathname: "/" } };
-  const [login, { data, loading, error }] = useMutation(SIGNIN_MUTATION, {
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
-    awaitRefetchQueries: true,
-    onCompleted() {
-      console.log("Complete");
-    },
-    onError(error) {
-      console.log(error);
-    }
-  });
+  const [login, { error }] = useMutation(LOGIN_MUTATION);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -79,8 +60,29 @@ export const SignIn = props => {
           initialValues={{ email: "", password: "" }}
           validate={validate}
           onSubmit={async (values, form) => {
-            await login({ variables: { ...values } });
-            //  history.replace(from);
+            const response = await login({
+              variables: { ...values },
+              update: (store, { data }) => {
+                if (!data) {
+                  return null;
+                }
+
+                store.writeQuery({
+                  query: ME_QUERY,
+                  data: {
+                    me: data.login.user
+                  }
+                });
+              }
+            });
+            console.log(response);
+
+            if (response && response.data) {
+              setAccessToken(response.data.login.accessToken);
+            }
+
+            console.log("Push to /");
+            history.push("/");
           }}
         >
           {({ handleSubmit }) => (
