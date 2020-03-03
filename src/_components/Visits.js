@@ -1,10 +1,9 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
 import { ErrorMessage, VisitTile, Loading } from "./";
+import { VISITLIST_QUERY } from "../Graphql";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,33 +19,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const GET_VISITS = gql`
-  query visitList($after: String) {
-    visits(after: $after) {
-      pageInfo {
-        startCursor
-        hasNextPage
-        endCursor
-        hasPreviousPage
-      }
-      edges {
-        node {
-          id
-          status
-          type
-          createdAt
-          user {
-            firstName
-            lastName
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const Visits = () => {
-  const { data, loading, error, fetchMore } = useQuery(GET_VISITS, {
+  const { data, loading, error, fetchMore } = useQuery(VISITLIST_QUERY, {
     pollInterval: 1500
   });
   const classes = useStyles();

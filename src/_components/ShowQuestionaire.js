@@ -163,6 +163,7 @@ const RadioOption = props => {
   console.log(choices.heading);
 
   const choice = choices.options.find(c => c.id === answer);
+  if (!choice) return null;
   options.push({ item: choice.label });
 
   return <QueItem heading={choices.heading} options={options} text={text} />;

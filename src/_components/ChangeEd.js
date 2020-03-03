@@ -42,8 +42,9 @@ const drugIds = [
   { value: "TADALAFIL 10", label: "Tadalafil 10mg" },
   { value: "TADALAFIL 20", label: "Tadalafil 20mg" },
   { value: "TADALAFIL_DAILY", label: "Tadalafil Daily 5mg" },
-  { value: "SILDENAFIL 25", label: "Sildenafil 25mg" },
+  { value: "SILDENAFIL 20", label: "Sildenafil 20mg" },
   { value: "SILDENAFIL 50", label: "Sildenafil 50mg" },
+  { value: "SILDENAFIL 100", label: "Sildenafil 100mg" },
   { value: "MALE_DAILY", label: "Mail Daily" },
   { value: "MALE_DAILY_PLUS", label: "Male Daily + Tadalafil 5mg" }
 ];
@@ -129,14 +130,12 @@ export const ChangeEd = props => {
                       label="Drug and Dose"
                     />
 
-                    <DialogActions>
-                      <Button onClick={handleClose} color="primary">
-                        Cancel
-                      </Button>
-                      <Button onClick={handleSubmit} color="primary">
-                        Save
-                      </Button>
-                    </DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                      Cancel
+                    </Button>
+                    <Button type="submit" color="primary">
+                      Save
+                    </Button>
                   </form>
                 )}
               </Form>

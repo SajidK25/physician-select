@@ -1,21 +1,27 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const RenderStdTextField = props => {
-  const {
-    input,
-    meta: { touched, error },
-    ...rest
-  } = props;
+const RenderStdTextField = ({
+  input: { name, onChange, value, ...restInput },
+  meta,
+  ...rest
+}) => {
+  const showError =
+    ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) &&
+    meta.touched;
 
   return (
     <TextField
-      {...input}
       {...rest}
-      error={error && touched}
-      helperText={touched && error}
+      name={name}
+      inputProps={restInput}
+      onChange={onChange}
+      value={value}
     />
   );
 };
 
 export { RenderStdTextField };
+
+/*helperText={showError ? meta.error || meta.submitError : undefined}
+  error={showError} */

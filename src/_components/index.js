@@ -20,3 +20,5 @@ export * from "./RenderSelect";
 export * from "./SelectField";
 export * from "./ChangeEd";
 export * from "./PrivateRoute";
+export * from "./RenderNoteField";
+export * from "./EnterMessage";

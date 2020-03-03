@@ -1,31 +1,28 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import { EnterMessage } from "./";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  heading: {
-    fontSize: 16,
-    fontWeight: 500
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    flex: "auto"
   },
-  item: {
-    fontSize: 14,
-    marginLeft: theme.spacing(2)
-  },
-  text: {
-    fontSize: 14,
-    marginLeft: theme.spacing(3)
+  entry: {
+    marginTop: theme.spacing(1),
+    padding: theme.spacing(2),
+    flex: 1,
+    maxHeight: 135
   },
   container: {
     flex: 1,
+    display: "flex",
+    flexDirection: "column",
     overflow: "auto",
-    margin: theme.spacing(1),
-    padding: theme.spacing(2)
-  },
-  idImage: {
-    marginLeft: theme.spacing(0.5),
-    marginRight: theme.spacing(1),
-    width: "50%"
+    padding: theme.spacing(1)
   }
 }));
 
@@ -35,8 +32,13 @@ export const PatientMessages = props => {
   console.log(visit);
 
   return (
-    <Paper className={classes.container}>
-      <Typography variant="h4">Private Messages</Typography>
-    </Paper>
+    <div className={classes.container}>
+      <Paper className={classes.paper}>
+        <Typography>New Messages</Typography>
+      </Paper>
+      <Paper className={classes.entry}>
+        <EnterMessage />
+      </Paper>
+    </div>
   );
 };

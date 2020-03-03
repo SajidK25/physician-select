@@ -5,8 +5,11 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary
+    textAlign: "center"
+  },
+  entry: {
+    marginTop: theme.spacing(1),
+    padding: theme.spacing(2)
   },
   container: {
     flex: 1,
@@ -21,6 +24,9 @@ export const Messages = () => {
     <div className={classes.container}>
       <Paper className={classes.paper}>
         <Typography>New Messages</Typography>
+      </Paper>
+      <Paper className={classes.entry}>
+        <Typography></Typography>
       </Paper>
     </div>
   );
