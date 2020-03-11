@@ -10,9 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import { SelectField, ErrorMessage } from "./";
 import { CURRENT_USER_QUERY } from "./User";
 
@@ -39,12 +37,12 @@ const SIGNIN_MUTATION = gql`
 const drugIds = [
   { value: "EROS", label: "EROS" },
   { value: "ROMEO", label: "ROMEO" },
-  { value: "TADALAFIL 10", label: "Tadalafil 10mg" },
-  { value: "TADALAFIL 20", label: "Tadalafil 20mg" },
+  { value: "TADALAFIL10", label: "Tadalafil 10mg" },
+  { value: "TADALAFIL20", label: "Tadalafil 20mg" },
   { value: "TADALAFIL_DAILY", label: "Tadalafil Daily 5mg" },
-  { value: "SILDENAFIL 20", label: "Sildenafil 20mg" },
-  { value: "SILDENAFIL 50", label: "Sildenafil 50mg" },
-  { value: "SILDENAFIL 100", label: "Sildenafil 100mg" },
+  { value: "SILDENAFIL20", label: "Sildenafil 20mg" },
+  { value: "SILDENAFIL50", label: "Sildenafil 50mg" },
+  { value: "SILDENAFIL100", label: "Sildenafil 100mg" },
   { value: "MALE_DAILY", label: "Mail Daily" },
   { value: "MALE_DAILY_PLUS", label: "Male Daily + Tadalafil 5mg" }
 ];
@@ -65,14 +63,9 @@ const validate = values => {
 
 export const ChangeEd = props => {
   const classes = useStyles();
-  const { visit } = props;
-  const subscription = visit.questionnaire.subscription;
+  const { prescription } = props;
   const [open, setOpen] = useState(false);
-  const [drugId, setDrugId] = useState(
-    subscription.drugId + subscription.doseOption
-      ? " " + subscription.doseOption
-      : ""
-  );
+  const [drugId, setDrugId] = useState(prescription.product.drugId);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -100,47 +93,32 @@ export const ChangeEd = props => {
       >
         <DialogTitle id="form-dialog-title">Change Treatment Plan</DialogTitle>
         <DialogContent>
-          <Mutation
-            mutation={SIGNIN_MUTATION}
-            refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-            onCompleted={() => {
-              console.log("Complete");
-              // history.push({ to });
-            }}
-            onError={error => {
-              console.log(error);
+          <Form
+            initialValues={{ startId: drugId }}
+            validate={validate}
+            onSubmit={async values => {
+              console.log("Variable:", values);
+              setOpen(false);
+              //  await login({ variables: { ...values } });
             }}
           >
-            {(login, { error, loading }) => (
-              <Form
-                initialValues={{ startId: drugId }}
-                validate={validate}
-                onSubmit={async (values, form) => {
-                  console.log("Variable:", values);
-                  setOpen(false);
-                  //  await login({ variables: { ...values } });
-                }}
-              >
-                {({ handleSubmit }) => (
-                  <form onSubmit={handleSubmit}>
-                    <ErrorMessage error={error} />
-                    <SelectField
-                      name="startId"
-                      options={drugIds}
-                      label="Drug and Dose"
-                    />
+            {({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <SelectField
+                  name="startId"
+                  options={drugIds}
+                  label="Drug and Dose"
+                />
 
-                    <Button onClick={handleClose} color="primary">
-                      Cancel
-                    </Button>
-                    <Button type="submit" color="primary">
-                      Save
-                    </Button>
-                  </form>
-                )}
-              </Form>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button type="submit" color="primary">
+                  Save
+                </Button>
+              </form>
             )}
-          </Mutation>
+          </Form>
         </DialogContent>
       </Dialog>
     </>

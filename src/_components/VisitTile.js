@@ -36,31 +36,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const VisitTile = props => {
-  const { visit } = props;
+  const { prescription } = props;
   const history = useHistory();
   const classes = useStyles();
   const timeDeadline = moment().diff(
-    moment(visit.createdAt).add(1440, "minutes"),
+    moment(prescription.createdAt).add(1440, "minutes"),
     "minutes"
   );
   return (
     <Paper
       className={classes.paper}
       onClick={() => {
-        history.push("/visit/" + visit.id);
+        history.push("/visit/" + prescription.id);
       }}
     >
-      {visit.type === "ED" ? (
+      {prescription.type === "ED" ? (
         <Avatar className={classes.orange}>ED</Avatar>
       ) : null}
       <Typography className={classes.name}>
-        {`${visit.user.lastName}, ${visit.user.firstName}`}
+        {`${prescription.user.lastName}, ${prescription.user.firstName}`}
       </Typography>
       <Typography
         color={timeDeadline > 0 ? "error" : ""}
         className={classes.date}
       >
-        {moment(visit.createdAt).fromNow()}
+        {moment(prescription.createdAt).fromNow()}
       </Typography>
     </Paper>
   );

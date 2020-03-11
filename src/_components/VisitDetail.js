@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { useParams } from "react-router-dom";
 import { ShowQuestionaire, Loading, PatientInfo, PatientMessages } from "./";
+import { GET_PRESCRIPTION } from "../Graphql";
 
 const GET_VISIT = gql`
   query getVisit($id: String!) {
@@ -32,7 +33,7 @@ const GET_VISIT = gql`
 
 export const VisitDetail = () => {
   const { id } = useParams();
-  const { data, loading, error } = useQuery(GET_VISIT, {
+  const { data, loading, error } = useQuery(GET_PRESCRIPTION, {
     variables: { id: id }
   });
 
@@ -42,9 +43,9 @@ export const VisitDetail = () => {
 
   return (
     <>
-      <PatientInfo visit={data.visit} />
-      <ShowQuestionaire questionnaire={data.visit.questionnaire} />
-      <PatientMessages visit={data.visit} />
+      <PatientInfo prescription={data.prescription} />
+      <ShowQuestionaire questionnaire={data.prescription.visit.questionnaire} />
+      <PatientMessages prescription={data.prescription} />
     </>
   );
 };

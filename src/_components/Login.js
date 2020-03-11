@@ -48,8 +48,8 @@ const validate = values => {
 export const Login = props => {
   const classes = useStyles();
   const history = useHistory();
-  // const location = useLocation();
-  // const { from } = location.state || { from: { pathname: "/" } };
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const [login, { error }] = useMutation(LOGIN_MUTATION);
 
@@ -82,7 +82,7 @@ export const Login = props => {
             }
 
             console.log("Push to /");
-            history.push("/");
+            history.push(from);
           }}
         >
           {({ handleSubmit }) => (

@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import moment from "moment";
-import { drugDisplaySetup } from "../_helpers";
 import { ShowPhoto, ChangeEd } from "../_components";
 
 // import { formatMoney } from "../_helpers";
@@ -85,40 +84,49 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TreatmentPlan = ({ visit }) => {
+const deliveryTitle = [
+  "Monthly Delivery",
+  "2 Month Delivery",
+  "3 Month Delivey"
+];
+
+const TreatmentPlan = ({ prescription }) => {
   const classes = useStyles();
   const history = useHistory();
-  const subscription = visit.questionnaire.subscription;
-  const [updateVisit] = useMutation(UPDATE_VISIT, {
-    onCompleted({ data }) {
-      history.push("/");
-    }
-  });
+  //  const [updateVisit] = useMutation(UPDATE_VISIT, {
+  //    onCompleted({ data }) {
+  //      history.push("/");
+  //    }
+  //  });
 
-  const displayOptions = drugDisplaySetup(subscription);
+  // const displayOptions = drugDisplaySetup(subscription);
 
   return (
     <Paper className={classes.treatmentPlan}>
       <div className={classes.treatment}>Treatment Preference</div>
       <Divider />
       <div className={classes.treatmentContainer}>
-        <div className={classes.drugDisplay}>{displayOptions.display}</div>
+        <div className={classes.drugDisplay}>
+          {prescription.product.display}
+        </div>
 
         <div
           className={classes.drugDoses}
-        >{`${displayOptions.monthlyDoses}x per month`}</div>
-        {displayOptions.addOnDisplay ? (
+        >{`${prescription.timesPerMonth}x per month`}</div>
+        {prescription.addon.display ? (
           <>
             <div className={classes.drugDisplay}>
-              {displayOptions.addOnDisplay}
+              {prescription.addon.display}
             </div>
             <div className={classes.drugDoses}>
-              {`${displayOptions.addOnMonthlyDoses}x per month`}
+              {`${prescription.addonTimesPerMonth}x per month`}
             </div>
           </>
         ) : null}
 
-        <div className={classes.drugDelivery}>{displayOptions.title}</div>
+        <div className={classes.drugDelivery}>
+          {deliveryTitle[prescription.shippingInterval - 1]}
+        </div>
       </div>
       <Button
         className={classes.button}
@@ -126,9 +134,10 @@ const TreatmentPlan = ({ visit }) => {
         variant="outlined"
         fullWidth={true}
         onClick={async () => {
-          await updateVisit({
-            variables: { id: visit.id, status: "APPROVED" }
-          });
+          console.log(prescription);
+          //     await updateVisit({
+          //       variables: { id: visit.id, status: "APPROVED" }
+          //     });
         }}
       >
         Approve
@@ -139,14 +148,15 @@ const TreatmentPlan = ({ visit }) => {
         variant="outlined"
         fullWidth={true}
         onClick={async () => {
-          await updateVisit({
-            variables: { id: visit.id, status: "DENIED" }
-          });
+          console.log("DENIED");
+          // await updateVisit({
+          //  variables: { id: visit.id, status: "DENIED" }
+          // });
         }}
       >
         Decline
       </Button>
-      <ChangeEd visit={visit} />
+      <ChangeEd prescription={prescription} />
       <Button
         className={classes.button}
         color="primary"
@@ -172,41 +182,49 @@ const ShowBP = ({ q }) => {
 };
 
 export const PatientInfo = props => {
-  const { visit } = props;
+  const { prescription } = props;
   const classes = useStyles();
-  console.log(visit);
-  const age = moment().diff(visit.user.birthDate, "years");
+  console.log(prescription);
+  const age = moment().diff(prescription.user.birthDate, "years");
   console.log("Age", age);
 
   return (
     <Paper className={classes.container}>
       <div className={classes.patientInfo}>
         <Typography variant="h4" className={classes.name}>
-          {`${visit.user.lastName}, ${visit.user.firstName}`}
+          {`${prescription.user.lastName}, ${prescription.user.firstName}`}
         </Typography>
-        <ShowPhoto photoId={visit.user.photoId} />
+        <ShowPhoto photoId={prescription.user.photoId} />
         <Typography variant="h5" className={classes.address}>
-          {`${visit.user.addresses[0].city}, ${visit.user.addresses[0].state} ${visit.user.addresses[0].zipcode} `}
+          {`${prescription.user.addresses[0].city}, ${prescription.user.addresses[0].state} ${prescription.user.addresses[0].zipcode} `}
         </Typography>
         <Typography variant="h5" className={classes.address}>
-          {visit.user.addresses[0].telephone}
+          {prescription.user.addresses[0].telephone}
         </Typography>
         <Typography className={classes.age}>{`${age} years old`}</Typography>
-        <ShowBP q={visit.questionnaire} />
+        <ShowBP q={prescription.visit.questionnaire} />
         <Typography
-          color={visit.questionnaire.allergies.explain ? "error" : ""}
+          color={
+            prescription.visit.questionnaire.allergies.explain ? "error" : ""
+          }
           className={classes.allergy}
         >
-          Allergies: {visit.questionnaire.allergies.explain || "None"}
+          Allergies:{" "}
+          {prescription.visit.questionnaire.allergies.explain || "None"}
         </Typography>
         <Typography
-          color={visit.questionnaire.otherMedicines.explain ? "error" : ""}
+          color={
+            prescription.visit.questionnaire.otherMedicines.explain
+              ? "error"
+              : ""
+          }
           className={classes.allergy}
         >
-          Medications: {visit.questionnaire.otherMedicines.explain || "None"}
+          Medications:{" "}
+          {prescription.visit.questionnaire.otherMedicines.explain || "None"}
         </Typography>
       </div>
-      <TreatmentPlan visit={visit} />
+      <TreatmentPlan prescription={prescription} />
     </Paper>
   );
 };

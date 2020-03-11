@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -25,8 +26,9 @@ export const Header = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          Physician Dashboard
+          Victory Select Dashboard
         </Typography>
+        <Link to="/prescriptions">Prescriptions</Link>
         {me && <Logout />}
       </Toolbar>
     </AppBar>
