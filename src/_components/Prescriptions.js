@@ -15,6 +15,7 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import Clear from "@material-ui/icons/Clear";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Edit from "@material-ui/icons/Edit";
+import moment from "moment";
 import FilterList from "@material-ui/icons/FilterList";
 import FirstPage from "@material-ui/icons/FirstPage";
 import LastPage from "@material-ui/icons/LastPage";
@@ -82,6 +83,11 @@ export const Prescriptions = () => {
     setOpen(false);
   };
 
+  const updateList = () => {
+    console.log("UpdateList", pdfData);
+    setOpen(false);
+  };
+
   if (loading) return <Loading />;
   if (error) return <ErrorMessage error={error} />;
   if (!data) return <p>No new visits</p>;
@@ -89,14 +95,19 @@ export const Prescriptions = () => {
   console.log("Data:", data);
 
   let tableData = [];
-  if (data.prescriptions && data.prescriptions.edges) {
-    tableData = data.prescriptions.edges.map(p => ({
-      name: `${p.node.user.lastName}, ${p.node.user.firstName}`,
-      product: `${p.node.product.display}`,
-      productQuantity: `${p.node.timesPerMonth * p.node.shippingInterval}`,
-      addon: `${p.node.addon.display}`,
-      addonQuantity: `${p.node.addonTimesPerMonth * p.node.shippingInterval}`,
-      approvedDate: "3/10/2020"
+  if (data.orders && data.orders.edges) {
+    tableData = data.orders.edges.map(p => ({
+      id: p.node.id,
+      name: `${p.node.prescription.user.lastName}, ${p.node.prescription.user.firstName}`,
+      product: `${p.node.prescription.product.display}`,
+      productQuantity: `${p.node.prescription.timesPerMonth *
+        p.node.prescription.shippingInterval}`,
+      addon: `${p.node.prescription.addon.display}`,
+      addonQuantity: `${p.node.prescription.addonTimesPerMonth *
+        p.node.prescription.shippingInterval}`,
+      approvedDate: moment(p.node.prescription.approvedDate).format(
+        "MM/DD/YYYY"
+      )
     }));
   }
 
@@ -112,12 +123,9 @@ export const Prescriptions = () => {
           {"Download Prescription File"}
         </DialogTitle>
         <DialogActions>
-          <ScriptPdf data={pdfData} />
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Update Status
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Close
+          <ScriptPdf data={pdfData} handleClick={updateList} />
+          <Button onClick={handleClose} color="primary">
+            Cancel
           </Button>
         </DialogActions>
       </Dialog>
@@ -131,7 +139,7 @@ export const Prescriptions = () => {
           { title: "Addon", field: "addon" },
           { title: "Quantity", field: "addonQuantity" },
           {
-            title: "Approved Date",
+            title: "Approved",
             field: "approvedDate"
           }
         ]}

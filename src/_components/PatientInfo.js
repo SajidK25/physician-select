@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import moment from "moment";
 import { ShowPhoto, ChangeEd } from "../_components";
+import { APPROVE_PRESCRIPTION } from "../Graphql";
 
 // import { formatMoney } from "../_helpers";
 
@@ -93,11 +94,11 @@ const deliveryTitle = [
 const TreatmentPlan = ({ prescription }) => {
   const classes = useStyles();
   const history = useHistory();
-  //  const [updateVisit] = useMutation(UPDATE_VISIT, {
-  //    onCompleted({ data }) {
-  //      history.push("/");
-  //    }
-  //  });
+  const [approvePrescription] = useMutation(APPROVE_PRESCRIPTION, {
+    onCompleted({ data }) {
+      history.push("/");
+    }
+  });
 
   // const displayOptions = drugDisplaySetup(subscription);
 
@@ -135,9 +136,9 @@ const TreatmentPlan = ({ prescription }) => {
         fullWidth={true}
         onClick={async () => {
           console.log(prescription);
-          //     await updateVisit({
-          //       variables: { id: visit.id, status: "APPROVED" }
-          //     });
+          await approvePrescription({
+            variables: { id: prescription.id }
+          });
         }}
       >
         Approve

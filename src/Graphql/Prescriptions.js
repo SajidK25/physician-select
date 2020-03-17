@@ -1,5 +1,13 @@
 import gql from "graphql-tag";
 
+export const APPROVE_PRESCRIPTION = gql`
+  mutation approvePrescription($id: String!) {
+    approvePrescription(id: $id) {
+      message
+    }
+  }
+`;
+
 export const PRESCRIPTIONLIST_QUERY = gql`
   query prescriptionList($after: String) {
     prescriptions(after: $after) {
@@ -26,8 +34,8 @@ export const PRESCRIPTIONLIST_QUERY = gql`
 `;
 
 export const PHARMACYLIST_QUERY = gql`
-  query prescriptionList($after: String) {
-    prescriptions(after: $after, status: "NEW") {
+  query orderList($after: String) {
+    orders(after: $after, status: "PENDING") {
       pageInfo {
         startCursor
         hasNextPage
@@ -37,21 +45,29 @@ export const PHARMACYLIST_QUERY = gql`
       edges {
         node {
           id
-          status
-          type
+          new
+          refills
+          amount
           createdAt
-          product {
-            display
-          }
-          addon {
-            display
-          }
-          timesPerMonth
-          addonTimesPerMonth
-          shippingInterval
-          user {
-            firstName
-            lastName
+          prescription {
+            id
+            status
+            type
+            createdAt
+            approvedDate
+            product {
+              display
+            }
+            addon {
+              display
+            }
+            timesPerMonth
+            addonTimesPerMonth
+            shippingInterval
+            user {
+              firstName
+              lastName
+            }
           }
         }
       }
