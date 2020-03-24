@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import moment from "moment";
 import { ShowPhoto, ChangeEd } from "../_components";
-import { APPROVE_PRESCRIPTION } from "../Graphql";
+import { APPROVE_PRESCRIPTION, DENY_PRESCRIPTION } from "../Graphql";
 
 // import { formatMoney } from "../_helpers";
 
@@ -96,10 +96,15 @@ const TreatmentPlan = ({ prescription }) => {
   const history = useHistory();
   const [approvePrescription] = useMutation(APPROVE_PRESCRIPTION, {
     onCompleted({ data }) {
-      history.push("/");
+      history.push("/physician");
     }
   });
 
+  const [denyPrescription] = useMutation(DENY_PRESCRIPTION, {
+    onCompleted({ data }) {
+      history.push("/physician");
+    }
+  });
   // const displayOptions = drugDisplaySetup(subscription);
 
   return (
@@ -114,7 +119,7 @@ const TreatmentPlan = ({ prescription }) => {
         <div
           className={classes.drugDoses}
         >{`${prescription.timesPerMonth}x per month`}</div>
-        {prescription.addon.display ? (
+        {prescription.addon ? (
           <>
             <div className={classes.drugDisplay}>
               {prescription.addon.display}
@@ -150,9 +155,9 @@ const TreatmentPlan = ({ prescription }) => {
         fullWidth={true}
         onClick={async () => {
           console.log("DENIED");
-          // await updateVisit({
-          //  variables: { id: visit.id, status: "DENIED" }
-          // });
+          await denyPrescription({
+            variables: { id: prescription.id }
+          });
         }}
       >
         Decline
@@ -163,7 +168,7 @@ const TreatmentPlan = ({ prescription }) => {
         color="primary"
         variant="outlined"
         fullWidth={true}
-        onClick={() => history.push("/")}
+        onClick={() => history.push("/physician")}
       >
         Cancel
       </Button>
@@ -206,7 +211,9 @@ export const PatientInfo = props => {
         <ShowBP q={prescription.visit.questionnaire} />
         <Typography
           color={
-            prescription.visit.questionnaire.allergies.explain ? "error" : ""
+            prescription.visit.questionnaire.allergies.explain
+              ? "error"
+              : "inherit"
           }
           className={classes.allergy}
         >

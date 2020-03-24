@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-// import { Visits, Messages } from "./";
+import { Visits, Messages } from "./";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,11 +22,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Dashboard = () => {
+export const Home = () => {
   const classes = useStyles();
 
-  return <>{/*}
-      <Visits />
-      <Messages />
-*/}</>;
+  return <div>Home</div>;
 };

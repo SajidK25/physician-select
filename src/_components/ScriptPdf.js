@@ -1,10 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Signature from "../_images/BFsignature.jpg";
 import {
   Page,
   Text,
   View,
+  Image,
   Document,
   StyleSheet,
   PDFDownloadLink
@@ -25,13 +27,37 @@ const styles = StyleSheet.create({
     width: "60%",
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 100,
+    marginTop: 30,
     fontSize: 12,
     fontWeight: 300
   },
   heading: {
-    fontSize: 28,
-    fontWeight: 600
+    fontSize: 30,
+    marginTop: 40,
+    fontWeight: "extrabold"
+  },
+  victoryFooter: {
+    borderTopStyle: "solid",
+    borderTopColor: "gray",
+    borderTopWidth: 1,
+    marginBottom: 20,
+    paddingTop: 1,
+    fontSize: 10,
+    color: "gray",
+    fontWeight: "light"
+  },
+  doctor: {
+    fontSize: 11,
+    fontWeight: "bold",
+    color: "black"
+  },
+  victory: {
+    borderTopStyle: "solid",
+    borderTopColor: "gray",
+    borderTopWidth: 1,
+    paddingTop: 20,
+    textAlign: "center",
+    marginBottom: 15
   },
   row: {
     flexGrow: 1,
@@ -71,14 +97,32 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     paddingBottom: 8
   },
+  centered: {
+    textAlign: "center"
+  },
+  phone: {
+    marginTop: 6,
+    fontSize: 9
+  },
+  signatureSection: {
+    marginTop: "auto",
+    marginBottom: 40
+  },
   signature: {
     borderStyle: "solid",
     borderColor: "darkgray",
-    borderTopWidth: 1,
-    marginTop: 60,
-    marginBottom: 15,
+    borderBottomWidth: 1,
+    marginBottom: 0,
     paddingTop: 8,
-    paddingBottom: 8
+    paddingBottom: 0
+  },
+  image: {
+    width: "50%",
+    padding: 0
+  },
+  centerImage: {
+    alignItems: "center",
+    flexGrow: 1
   },
   page: {
     flexDirection: "column",
@@ -98,59 +142,105 @@ const Report = ({ data }) => (
   </Page>
 );
 
-const Prescriptions = ({ data }) => (
-  <>
-    {data.map(d => (
-      <Page key={d.id} size="A4">
-        <View style={styles.body}>
-          <Text style={styles.heading}>Prescription</Text>
-          <Text>{d.approvedDate}</Text>
-
-          <View style={styles.patientInfo}>
-            <View style={styles.row}>
-              <Text style={styles.patientName}>{d.name}</Text>
-              <Text style={styles.push}>DoB: 09/09/1959</Text>
-            </View>
-            <Text>352 Ambroise, Newport Coast, CA 71803</Text>
-          </View>
-
-          <View style={styles.drugSection}>
-            <Text style={styles.drug}>{d.product}</Text>
-            <View style={styles.row}>
-              <Text>Quantity: 8</Text>
-              <Text style={styles.push}>Date Rx Written: 03/17/2020</Text>
-            </View>
-            <View style={styles.row}>
-              <Text>Refills: 11</Text>
-              <Text style={styles.push}>Expires on: 03/17/2021</Text>
-            </View>
-            <View style={styles.instructions}>
-              <Text>Instructions for Romeo go here.</Text>
-            </View>
-          </View>
-
-          <View style={styles.drugSection}>
-            <Text style={styles.drug}>{d.addon}</Text>
-            <View style={styles.row}>
-              <Text>Quantity: 30</Text>
-              <Text style={styles.push}>Date Rx Written: 03/17/2020</Text>
-            </View>
-            <View style={styles.row}>
-              <Text>Refills: 11</Text>
-              <Text style={styles.push}>Expires on: 03/17/2021</Text>
-            </View>
-            <View style={styles.instructions}>
-              <Text>Take three capsules by mouth daily.</Text>
-            </View>
-          </View>
-          <View style={styles.signature}>
-            <Text>Signature</Text>
-          </View>
-        </View>
-      </Page>
-    ))}
-  </>
+const PrescriptionFooter = () => (
+  <View style={styles.victoryFooter}>
+    <View style={styles.victory}>
+      <Text>VICTORY MEDICAL & FAMILY CARE</Text>
+      <Text style={styles.doctor}>WILLIAM G. FRANKLIN, M.D.</Text>
+      <Text>4303 VICTORY DRIVE</Text>
+      <Text>AUSTIN, TX 78704</Text>
+      <Text style={styles.phone}>(512) 462-3627</Text>
+    </View>
+  </View>
 );
+
+const PatientSection = ({ data }) => {
+  const address =
+    data.addressOne +
+    (data.addressTwo ? " " + data.address.to : "") +
+    ", " +
+    data.cityStateZip;
+
+  return (
+    <View style={styles.patientInfo}>
+      <View style={styles.row}>
+        <Text style={styles.patientName}>
+          {data.firstName} {data.lastName}
+        </Text>
+        <Text style={styles.push}>DoB: {data.birthDate}</Text>
+      </View>
+      <Text>{address}</Text>
+    </View>
+  );
+};
+
+const SignatureSection = () => (
+  <View style={styles.signatureSection}>
+    <View style={styles.signature}>
+      <Image src={Signature} style={styles.image} />
+    </View>
+    <Text>Signature</Text>
+  </View>
+);
+
+const DrugInfo = ({ data, product, quantity, refills, directions }) => {
+  if (!product) return null;
+
+  return (
+    <View style={styles.drugSection}>
+      <Text style={styles.drug}>{product}</Text>
+      <View style={styles.row}>
+        <Text>{`Quantity: ${quantity}`}</Text>
+        <Text style={styles.push}>Date Rx Written: {data.startDate}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text>{`Refills: ${refills}`}</Text>
+        <Text style={styles.push}>Expires on: {data.expireDate}</Text>
+      </View>
+      <View style={styles.instructions}>
+        <Text>{directions}</Text>
+      </View>
+    </View>
+  );
+};
+
+const Prescriptions = ({ data }) => {
+  console.log("PDF data", data);
+
+  return (
+    <>
+      {data.map(d => (
+        <Page key={d.id} size="A4">
+          <View style={styles.body}>
+            <Text style={styles.heading}>Prescription</Text>
+            <Text>{d.approvedDate}</Text>
+
+            <PatientSection data={d} />
+
+            <DrugInfo
+              data={d}
+              product={d.product}
+              refills={d.refills}
+              quantity={d.productQuantity}
+              directions={d.productDirections}
+            />
+
+            <DrugInfo
+              data={d}
+              product={d.addon}
+              refills={d.refills}
+              quantity={d.addonQuantity}
+              directions={d.addonDirections}
+            />
+
+            <SignatureSection />
+          </View>
+          <PrescriptionFooter />
+        </Page>
+      ))}
+    </>
+  );
+};
 
 // Create Document Component
 const Script = ({ data }) => {

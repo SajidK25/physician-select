@@ -8,8 +8,41 @@ export const APPROVE_PRESCRIPTION = gql`
   }
 `;
 
-export const PRESCRIPTIONLIST_QUERY = gql`
-  query prescriptionList($after: String) {
+export const DENY_PRESCRIPTION = gql`
+  mutation denyPrescription($id: String!) {
+    denyPrescription(id: $id) {
+      message
+    }
+  }
+`;
+
+export const PENDING_PRESCRIPTIONS = gql`
+  query {
+    pendingPrescriptions {
+      id
+      status
+      type
+      createdAt
+      product {
+        display
+        directions
+        pillsPerDose
+      }
+      addon {
+        display
+        directions
+        pillsPerDose
+      }
+      user {
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const VISITLIST_QUERY = gql`
+  query visitList($after: String) {
     prescriptions(after: $after) {
       pageInfo {
         startCursor
@@ -23,6 +56,16 @@ export const PRESCRIPTIONLIST_QUERY = gql`
           status
           type
           createdAt
+          product {
+            display
+            directions
+            pillsPerDose
+          }
+          addon {
+            display
+            directions
+            pillsPerDose
+          }
           user {
             firstName
             lastName
@@ -34,8 +77,8 @@ export const PRESCRIPTIONLIST_QUERY = gql`
 `;
 
 export const PHARMACYLIST_QUERY = gql`
-  query orderList($after: String) {
-    orders(after: $after, status: "PENDING") {
+  query orderList($status: String, $after: String) {
+    orders(after: $after, status: $status) {
       pageInfo {
         startCursor
         hasNextPage
@@ -49,25 +92,40 @@ export const PHARMACYLIST_QUERY = gql`
           refills
           amount
           createdAt
+          user {
+            firstName
+            lastName
+            birthDate
+          }
+          address {
+            addressOne
+            addressTwo
+            city
+            state
+            zipcode
+          }
           prescription {
             id
             status
             type
             createdAt
             approvedDate
+            startDate
+            expireDate
+            refillsRemaining
             product {
               display
+              directions
+              pillsPerDose
             }
             addon {
               display
+              directions
+              pillsPerDose
             }
             timesPerMonth
             addonTimesPerMonth
             shippingInterval
-            user {
-              firstName
-              lastName
-            }
           }
         }
       }
@@ -86,6 +144,7 @@ export const GET_PRESCRIPTION = gql`
         questionnaire
       }
       timesPerMonth
+
       addonTimesPerMonth
       shippingInterval
       amountDue
@@ -96,6 +155,8 @@ export const GET_PRESCRIPTION = gql`
       addon {
         productName
         display
+        directions
+        pillsPerDose
       }
       user {
         firstName

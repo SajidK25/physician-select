@@ -4,11 +4,19 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { TabPanel, a11yProps } from "./";
-import { Prescriptions } from "./";
+import { NewVisits } from "./";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginBottom: 50
+    flexGrow: 1,
+    display: "flex",
+    height: "100%",
+    minHeight: "100%",
+    padding: theme.spacing(1)
+  },
+  gridItem: {
+    overflow: "auto",
+    height: "auto"
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -19,10 +27,14 @@ const useStyles = makeStyles(theme => ({
     marginRight: "auto",
     flexDirection: "column",
     alignItems: "center"
+  },
+  container: {
+    display: "flex",
+    flex: 1
   }
 }));
 
-export const Pharmacy = () => {
+export const Physician = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -42,16 +54,16 @@ export const Pharmacy = () => {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="To Be Processed" {...a11yProps(0)} />
-          <Tab label="In Process" {...a11yProps(1)} />
+          <Tab label="New Patients" {...a11yProps(0)} />
+          <Tab label="New Tasks" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
 
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <Prescriptions status="PENDING" />
+        <NewVisits />
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <Prescriptions status="PROCESSING" />
+        <div>New Tasks!</div>
       </TabPanel>
     </div>
   );

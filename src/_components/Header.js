@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import { Logout } from "./";
 import { ME_QUERY } from "../Graphql";
 
@@ -28,7 +29,27 @@ export const Header = () => {
         <Typography variant="h6" className={classes.title}>
           Victory Select Dashboard
         </Typography>
-        <Link to="/prescriptions">Prescriptions</Link>
+
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          component={RouterLink}
+          to="/pharmacy"
+        >
+          Pharmacy
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          component={RouterLink}
+          to="/physician"
+        >
+          Physician
+        </Button>
+
         {me && <Logout />}
       </Toolbar>
     </AppBar>

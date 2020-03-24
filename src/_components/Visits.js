@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { ErrorMessage, VisitTile, Loading } from "./";
-import { PRESCRIPTIONLIST_QUERY } from "../Graphql";
+import { VISITLIST_QUERY } from "../Graphql";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Visits = () => {
-  const { data, loading, error, fetchMore } = useQuery(PRESCRIPTIONLIST_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(VISITLIST_QUERY, {
     pollInterval: 1500
   });
   const classes = useStyles();

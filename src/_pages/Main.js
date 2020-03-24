@@ -1,18 +1,21 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout, Login, PrivateRoute } from "../_components";
-import { Dashboard, VisitDetail, Pharmacy } from "../_components";
+import { VisitDetail, Pharmacy, Physician } from "../_components";
+import { Home } from "./";
 
 export const Main = props => {
   return (
     <Layout>
       <Switch>
-        <Redirect from="/" exact to="/dashboard" />
+        <Route path="/" exact>
+          <Home />
+        </Route>
         <PrivateRoute path="/pharmacy">
           <Pharmacy />
         </PrivateRoute>
-        <PrivateRoute path="/dashboard">
-          <Dashboard />
+        <PrivateRoute path="/physician">
+          <Physician />
         </PrivateRoute>
         <PrivateRoute path="/visit/:id">
           <VisitDetail />
