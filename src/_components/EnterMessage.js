@@ -34,7 +34,8 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const onSubmit = async values => {
   await sleep(300);
-  //  window.alert(JSON.stringify(values, 0, 2));
+  window.alert(JSON.stringify(values, 0, 2));
+  values.messageText = "";
 };
 
 export const EnterMessage = props => {
@@ -73,10 +74,10 @@ export const EnterMessage = props => {
       //  setAccessToken(response.data.login.accessToken);
       // }
     >
-      {({ handleSubmit, submitting, pristine, reset, invalid }) => (
+      {({ form, handleSubmit, submitting, pristine, reset, invalid }) => (
         <form
           onSubmit={event => {
-            handleSubmit(event).then(reset);
+            handleSubmit(event).then(form.reset);
           }}
           className={classes.form}
         >

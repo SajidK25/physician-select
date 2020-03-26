@@ -11,7 +11,7 @@ import { formatDate } from "../_helpers";
 import Print from "@material-ui/icons/Print";
 import { ErrorMessage, ScriptPdf, Loading } from "./";
 import { tableIcons } from "./";
-import { PHARMACYLIST_QUERY, PROCESS_ORDERS, SHIP_ORDERS } from "../Graphql";
+import { ORDERLIST, PROCESS_ORDERS, SHIP_ORDERS } from "../Graphql";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +32,7 @@ export const Prescriptions = ({ status }) => {
   const [open, setOpen] = React.useState(false);
   const [pdfData, setPdfData] = useState([]);
 
-  const { data, loading, error, fetchMore } = useQuery(PHARMACYLIST_QUERY, {
+  const { data, loading, error } = useQuery(ORDERLIST, {
     variables: { status },
     pollInterval: 2000
   });
@@ -74,35 +74,36 @@ export const Prescriptions = ({ status }) => {
   console.log("Data:", data);
 
   let tableData = [];
-  if (data.orders && data.orders.edges) {
-    tableData = data.orders.edges.map(p => ({
-      id: p.node.id,
-      name: `${p.node.user.lastName}, ${p.node.user.firstName}`,
-      lastName: p.node.user.lastName,
-      firstName: p.node.user.firstName,
-      addressOne: p.node.address.addressOne,
-      addressTwo: p.node.address.addressTwo,
-      cityStateZip: `${p.node.address.city}, ${p.node.address.state} ${p.node.address.zipcode}`,
-      birthDate: formatDate(p.node.user.birthDate),
-      product: p.node.prescription.product.display,
+  if (data.orders) {
+    tableData = data.orders.map(p => ({
+      id: p.id,
+      status: p.status,
+      name: `${p.user.lastName}, ${p.user.firstName}`,
+      lastName: p.user.lastName,
+      firstName: p.user.firstName,
+      addressOne: p.address.addressOne,
+      addressTwo: p.address.addressTwo,
+      cityStateZip: `${p.address.city}, ${p.address.state} ${p.address.zipcode}`,
+      birthDate: formatDate(p.user.birthDate),
+      product: p.prescription.product.display,
       productQuantity:
-        p.node.prescription.timesPerMonth *
-        p.node.prescription.shippingInterval *
-        p.node.prescription.product.pillsPerDose,
-      productDirections: p.node.prescription.product.directions,
-      addon: p.node.prescription.addon ? p.node.prescription.addon.display : "",
-      addonQuantity: p.node.prescription.addon
-        ? p.node.prescription.addonTimesPerMonth *
-          p.node.prescription.shippingInterval *
-          p.node.prescription.addon.pillsPerDose
+        p.prescription.timesPerMonth *
+        p.prescription.shippingInterval *
+        p.prescription.product.pillsPerDose,
+      productDirections: p.prescription.product.directions,
+      addon: p.prescription.addon ? p.prescription.addon.display : "",
+      addonQuantity: p.prescription.addon
+        ? p.prescription.addonTimesPerMonth *
+          p.prescription.shippingInterval *
+          p.prescription.addon.pillsPerDose
         : 0,
-      addonDirections: p.node.prescription.addon
-        ? p.node.prescription.addon.directions
+      addonDirections: p.prescription.addon
+        ? p.prescription.addon.directions
         : "",
-      approvedDate: formatDate(p.node.prescription.approvedDate),
-      refills: p.node.prescription.refillsRemaining,
-      startDate: formatDate(p.node.prescription.startDate),
-      expireDate: formatDate(p.node.prescription.expireDate)
+      approvedDate: formatDate(p.prescription.approvedDate),
+      refills: p.prescription.refillsRemaining,
+      startDate: formatDate(p.prescription.startDate),
+      expireDate: formatDate(p.prescription.expireDate)
     }));
   }
 
