@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     height: "auto"
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: 4,
     width: "100%",
     maxWidth: 1200,
     display: "flex",

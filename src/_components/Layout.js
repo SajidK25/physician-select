@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   appContainer: {
     display: "flex",
-    overflow: "hidden",
+    overflow: "scroll",
     height: "100vh",
     marginTop: -70,
     paddingTop: 70,

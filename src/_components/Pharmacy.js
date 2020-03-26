@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 50
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: 4,
     width: "100%",
     maxWidth: 1000,
     display: "flex",

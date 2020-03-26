@@ -32,55 +32,27 @@ const validate = values => {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const onSubmit = async values => {
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-  values.messageText = "";
-};
-
 export const EnterMessage = props => {
   const classes = useStyles();
-
-  //  const history = useHistory();
-  // const location = useLocation();
-  // const { from } = location.state || { from: { pathname: "/" } };
-
-  //  const [login, { error }] = useMutation(LOGIN_MUTATION);
+  const { visitId } = props;
 
   return (
     <Form
       initialValues={{ messageText: "" }}
       validate={validate}
-      onSubmit={onSubmit}
-
-      //const response = await login({
-      //  variables: { ...values },
-      //  update: (store, { data }) => {
-      //    if (!data) {
-      //      return null;
-      //    }
-
-      //    store.writeQuery({
-      //      query: ME_QUERY,
-      //      data: {
-      //        me: data.login.user
-      //      }
-      //    });
-      //  }
-      //});
-      //console.log(response);
-
-      //if (response && response.data) {
-      //  setAccessToken(response.data.login.accessToken);
-      // }
+      onSubmit={async values => {
+        const input = {
+          visitId: visitId,
+          text: values.messageText,
+          private: false
+        };
+        // const response = await createMessage({ variables: input });
+        // console.log(response);
+        values.messageText = "";
+      }}
     >
       {({ form, handleSubmit, submitting, pristine, reset, invalid }) => (
-        <form
-          onSubmit={event => {
-            handleSubmit(event).then(form.reset);
-          }}
-          className={classes.form}
-        >
+        <form onSubmit={handleSubmit} className={classes.form}>
           <Field
             component={RenderStdTextField}
             autoFocus={true}
