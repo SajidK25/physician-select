@@ -37,10 +37,11 @@ const styles = StyleSheet.create({
     fontWeight: "extrabold"
   },
   victoryFooter: {
-    borderTopStyle: "solid",
-    borderTopColor: "gray",
-    borderTopWidth: 1,
-    marginBottom: 20,
+    marginTop: 25,
+    borderBottomStyle: "solid",
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    marginBottom: 2,
     paddingTop: 1,
     fontSize: 10,
     color: "gray",
@@ -52,12 +53,12 @@ const styles = StyleSheet.create({
     color: "black"
   },
   victory: {
-    borderTopStyle: "solid",
-    borderTopColor: "gray",
-    borderTopWidth: 1,
-    paddingTop: 20,
+    borderBottomStyle: "solid",
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    paddingBottom: 20,
     textAlign: "center",
-    marginBottom: 15
+    marginBottom: 0
   },
   row: {
     flexGrow: 1,
@@ -211,6 +212,7 @@ const Prescriptions = ({ data }) => {
     <>
       {data.map(d => (
         <Page key={d.id} size="A4">
+          <PrescriptionFooter />
           <View style={styles.body}>
             <Text style={styles.heading}>Prescription</Text>
             <Text>{d.approvedDate}</Text>
@@ -235,7 +237,6 @@ const Prescriptions = ({ data }) => {
 
             <SignatureSection />
           </View>
-          <PrescriptionFooter />
         </Page>
       ))}
     </>

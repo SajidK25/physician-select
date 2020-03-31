@@ -13,13 +13,11 @@ export const ORDERLIST = gql`
         lastName
         birthDate
       }
-      address {
-        addressOne
-        addressTwo
-        city
-        state
-        zipcode
-      }
+      addressOne
+      addressTwo
+      city
+      state
+      zipcode
       prescription {
         id
         status

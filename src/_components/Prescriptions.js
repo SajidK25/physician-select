@@ -81,9 +81,9 @@ export const Prescriptions = ({ status }) => {
       name: `${p.user.lastName}, ${p.user.firstName}`,
       lastName: p.user.lastName,
       firstName: p.user.firstName,
-      addressOne: p.address.addressOne,
-      addressTwo: p.address.addressTwo,
-      cityStateZip: `${p.address.city}, ${p.address.state} ${p.address.zipcode}`,
+      addressOne: p.addressOne,
+      addressTwo: p.addressTwo,
+      cityStateZip: `${p.city}, ${p.state} ${p.zipcode}`,
       birthDate: formatDate(p.user.birthDate),
       product: p.prescription.product.display,
       productQuantity:

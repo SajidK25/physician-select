@@ -54,7 +54,7 @@ export const Physician = () => {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="New Patients" {...a11yProps(0)} />
+          <Tab label="Patients" {...a11yProps(0)} />
           <Tab label="New Tasks" {...a11yProps(1)} />
         </Tabs>
       </AppBar>

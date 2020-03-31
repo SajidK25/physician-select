@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from "material-table";
 import { fromDate, calculateDeadline } from "../_helpers";
 import Avatar from "@material-ui/core/Avatar";
-import { deepOrange } from "@material-ui/core/colors";
+import { deepOrange, green, red } from "@material-ui/core/colors";
 import Print from "@material-ui/icons/Print";
 import { ErrorMessage, ScriptPdf, Loading } from "./";
 import { tableIcons } from "./";
@@ -50,6 +50,60 @@ const useAvatarStyles = makeStyles(theme => ({
   }
 }));
 
+const useStatusAvatarStyles = makeStyles(theme => ({
+  statusAvatar: {
+    fontSize: 14,
+    fontWeight: 500
+  },
+
+  pending: {
+    height: 20,
+    width: 20,
+    fontSize: 12,
+    color: theme.palette.getContrastText(green[800]),
+    backgroundColor: green[500]
+  },
+  active: {
+    height: 20,
+    width: 20,
+    fontSize: 12,
+    color: theme.palette.getContrastText(green[800]),
+    backgroundColor: green[800]
+  },
+  denied: {
+    height: 20,
+    width: 20,
+    fontSize: 12,
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500]
+  }
+}));
+
+const StatusAvatar = ({ status }) => {
+  const classes = useStatusAvatarStyles();
+  console.log("Status", status);
+
+  return (
+    <div className={classes.statusAvatar}>
+      {status === "ACTIVE" && (
+        <Avatar variant="square" className={classes.active}>
+          A
+        </Avatar>
+      )}
+      {status === "PENDING" && (
+        <Avatar variant="square" className={classes.pending}>
+          P
+        </Avatar>
+      )}
+      {status === "DENIED" && (
+        <Avatar variant="square" className={classes.denied}>
+          D
+        </Avatar>
+      )}
+    </div>
+  );
+};
+
 const TypeAvatar = ({ type }) => {
   const classes = useAvatarStyles();
 
@@ -62,7 +116,9 @@ const EnteredDate = ({ enteredDate }) => {
   if (!enteredDate) return "";
 
   return (
-    <Typography color={calculateDeadline(enteredDate) > 0 ? "error" : ""}>
+    <Typography
+      color={calculateDeadline(enteredDate) > 0 ? "error" : "textPrimary"}
+    >
       {fromDate(enteredDate)}
     </Typography>
   );
@@ -100,6 +156,7 @@ export const NewVisits = ({ status }) => {
     tableData = data.pendingPrescriptions.map(p => ({
       id: p.id,
       type: p.type,
+      status: p.status,
       name: `${p.user.lastName}, ${p.user.firstName}`,
       lastName: p.user.lastName,
       firstName: p.user.firstName,
@@ -141,6 +198,12 @@ export const NewVisits = ({ status }) => {
             render: rowData => <TypeAvatar type={rowData.type} />
           },
           {
+            title: "Stat",
+            field: "status",
+            width: 60,
+            render: rowData => <StatusAvatar status={rowData.status} />
+          },
+          {
             title: "Name",
             field: "name"
           },
@@ -165,6 +228,7 @@ export const NewVisits = ({ status }) => {
           padding: "dense",
           draggable: false,
           toolbar: false,
+          pageSize: 10,
           showTextRowsSelected: false,
           showTitle: false,
           tableLayout: "fixed",
