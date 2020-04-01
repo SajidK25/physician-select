@@ -28,12 +28,12 @@ const theme = createMuiTheme({
       default: "#fafafa"
     }
   },
-  breakpoints: {
-    values: {
-      sm: 425,
-      md: 768
-    }
-  },
+  //  breakpoints: {
+  //    values: {
+  //      sm: 425,
+  //      md: 768
+  //    }
+  //  },
   typography: {
     body1: {
       fontWeight: 300

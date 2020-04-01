@@ -1,25 +1,39 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 import { setAccessToken } from "../accessToken";
 import { LOGOUT_MUTATION } from "../Graphql";
 
+const useStyles = makeStyles(theme => ({
+  logout: {
+    textAlign: "center",
+    display: "block",
+    width: "100%",
+    height: 50,
+    fontStyle: "normal",
+    fontSize: 18,
+    color: "rgb(110, 119, 127)",
+    padding: "16px 0px",
+    background: "rgb(255, 255, 255)",
+    cursor: "pointer"
+  }
+}));
+
 export const Logout = () => {
-  const history = useHistory();
   const [logout, { client }] = useMutation(LOGOUT_MUTATION);
+  const classes = useStyles();
 
   return (
-    <Button
+    <div
+      className={classes.logout}
       onClick={async () => {
         await logout();
         setAccessToken("");
         await client.resetStore();
       }}
-      color="inherit"
-      align="center"
     >
       Logout
-    </Button>
+    </div>
   );
 };

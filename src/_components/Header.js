@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Logout } from "./";
+import { Logout, Nav } from "./";
 import { ME_QUERY } from "../Graphql";
 
 const useStyles = makeStyles({
@@ -29,8 +29,9 @@ export const Header = () => {
         <Typography variant="h6" className={classes.title}>
           Victory Select Dashboard
         </Typography>
+        <Nav />
 
-        <Button
+        {/*       <Button
           variant="contained"
           color="primary"
           disableElevation
@@ -50,7 +51,7 @@ export const Header = () => {
           Physician
         </Button>
 
-        {me && <Logout />}
+ {me && <Logout />} */}
       </Toolbar>
     </AppBar>
   );

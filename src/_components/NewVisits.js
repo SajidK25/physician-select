@@ -231,7 +231,7 @@ export const NewVisits = ({ status }) => {
           pageSize: 10,
           showTextRowsSelected: false,
           showTitle: false,
-          tableLayout: "fixed",
+          tableLayout: "auto",
           headerStyle: {
             backgroundColor: "#039be5",
             borderRightStyle: "solid",

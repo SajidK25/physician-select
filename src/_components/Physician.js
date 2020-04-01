@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { TabPanel, a11yProps } from "./";
-import { NewVisits } from "./";
+import { PrescriptionList } from "./";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,6 +17,10 @@ const useStyles = makeStyles(theme => ({
   gridItem: {
     overflow: "auto",
     height: "auto"
+  },
+  tabPanel: {
+    flexGrow: 1,
+    width: "100%"
   },
   paper: {
     marginTop: 4,
@@ -59,10 +63,20 @@ export const Physician = () => {
         </Tabs>
       </AppBar>
 
-      <TabPanel value={value} index={0} dir={theme.direction}>
-        <NewVisits />
+      <TabPanel
+        className={classes.tabPanel}
+        value={value}
+        index={0}
+        dir={theme.direction}
+      >
+        <PrescriptionList />
       </TabPanel>
-      <TabPanel value={value} index={1} dir={theme.direction}>
+      <TabPanel
+        className={classes.tabPanel}
+        value={value}
+        index={1}
+        dir={theme.direction}
+      >
         <div>New Tasks!</div>
       </TabPanel>
     </div>
