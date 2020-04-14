@@ -8,7 +8,7 @@ import { indigo, green, yellow, red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/styles";
 import moment from "moment";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     width: "100%",
     padding: theme.spacing(1),
@@ -18,12 +18,12 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       borderStyle: "solid",
       borderWidth: 0.5,
-      borderColor: theme.palette.primary
-    }
+      borderColor: theme.palette.primary,
+    },
   },
   mainContainer: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   iconContainer: {
     display: "flex",
@@ -32,28 +32,28 @@ const useStyles = makeStyles(theme => ({
     flexBasis: 58,
     [theme.breakpoints.down("sm")]: {
       flexBasis: 30,
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+    },
   },
   avatarItem: {
     flexBasis: "50%",
     [theme.breakpoints.down("sm")]: {
-      flexBasis: "100%"
-    }
+      flexBasis: "100%",
+    },
   },
   nameItem: {
     flexBasis: "calc(40% - 58px)",
     fontWeight: 500,
     [theme.breakpoints.down("sm")]: {
       flexBasis: "calc(45% - 30px)",
-      selfAlign: "flex-start"
-    }
+      selfAlign: "flex-start",
+    },
   },
   dateItem: {
     marginLeft: "auto",
     fontWeight: 400,
     fontSize: 16,
-    flexBasis: 125
+    flexBasis: 125,
   },
   productContainer: {
     display: "flex",
@@ -61,25 +61,25 @@ const useStyles = makeStyles(theme => ({
     flexBasis: "calc(66% - 58px)",
     [theme.breakpoints.down("sm")]: {
       flexBasis: "calc(40% - 30px)",
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+    },
   },
   productItem: {
     flexBasis: "50%",
     [theme.breakpoints.down("sm")]: {
-      flexBasis: "100%"
-    }
-  }
+      flexBasis: "100%",
+    },
+  },
 }));
 
-const useAvatarStyles = makeStyles(theme => ({
+const useAvatarStyles = makeStyles((theme) => ({
   pending: {
     height: 20,
     width: 20,
     fontSize: 12,
     fontWeight: 600,
     color: theme.palette.getContrastText(yellow[500]),
-    backgroundColor: yellow[500]
+    backgroundColor: yellow[500],
   },
   active: {
     height: 20,
@@ -87,23 +87,26 @@ const useAvatarStyles = makeStyles(theme => ({
     fontSize: 12,
     fontWeight: 500,
     color: theme.palette.getContrastText(green[800]),
-    backgroundColor: green[800]
+    backgroundColor: green[800],
   },
   denied: {
     height: 20,
     width: 20,
     fontSize: 12,
     color: theme.palette.getContrastText(red[500]),
-    backgroundColor: red[500]
+    backgroundColor: red[500],
   },
-  ed: {
+  typeAvatar: {
     height: 20,
     width: 20,
     fontSize: 12,
     fontWeight: 600,
+    color: "#fff",
+  },
+  ed: {
     color: theme.palette.getContrastText(indigo[900]),
-    backgroundColor: indigo[900]
-  }
+    backgroundColor: indigo[900],
+  },
 }));
 
 const StatusAvatar = ({ status }) => {
@@ -131,12 +134,28 @@ const StatusAvatar = ({ status }) => {
   );
 };
 
+const colors = [
+  { type: "ED", color: "#0000b0" },
+  { type: "HAIR", color: "#ff0a0a" },
+  { type: "ALLERGY", color: "#00c0c0" },
+  { type: "JOY", color: "#ffc500" },
+  { type: "SLEEP", color: "#00bb00" },
+];
+
 const TypeAvatar = ({ type }) => {
   const classes = useAvatarStyles();
-  return <>{type === "ED" && <Avatar className={classes.ed}>ED</Avatar>}</>;
+  const text = type.substring(0, 1);
+  const item = colors.find((c) => c.type === type);
+  const color = item.color;
+
+  return (
+    <Avatar style={{ backgroundColor: color }} className={classes.typeAvatar}>
+      {text}
+    </Avatar>
+  );
 };
 
-export const PrescriptionListTile = props => {
+export const PrescriptionListTile = (props) => {
   const { prescription } = props;
   const history = useHistory();
   const classes = useStyles();

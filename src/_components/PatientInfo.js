@@ -21,25 +21,25 @@ const UPDATE_VISIT = gql`
   }
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: 16,
-    fontWeight: 500
+    fontWeight: 500,
   },
   item: {
     fontSize: 14,
-    marginLeft: theme.spacing(2)
+    marginLeft: theme.spacing(2),
   },
   allergyHeading: {
-    fontWeight: 400
+    fontWeight: 400,
   },
   allergy: {},
   text: {
     fontSize: 14,
-    marginLeft: theme.spacing(3)
+    marginLeft: theme.spacing(3),
   },
   patientInfo: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,
@@ -47,48 +47,48 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     margin: theme.spacing(1),
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   treatmentPlan: {
     alignSelf: "flex-end",
     width: "100%",
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   treatment: {
     fontSize: 18,
     fontWeight: 500,
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
   treatmentContainer: {
-    paddingLeft: theme.spacing(1)
+    paddingLeft: theme.spacing(1),
   },
   drugDisplay: {
     fontSize: 18,
     fontWeight: 400,
     marginTop: 8,
-    marginBottom: 0
+    marginBottom: 0,
   },
   drugDelivery: {
     fontWeight: 500,
     fontSize: 14,
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(4)
+    marginBottom: theme.spacing(4),
   },
   age: {
     fontSize: 18,
-    fontWeight: 400
+    fontWeight: 400,
   },
   button: {
-    margin: theme.spacing(0.25)
-  }
+    margin: theme.spacing(0.25),
+  },
 }));
 
 const deliveryTitle = [
   "Monthly Delivery",
   "2 Month Delivery",
-  "3 Month Delivey"
+  "3 Month Delivey",
 ];
 
 const TreatmentPlan = ({ prescription }) => {
@@ -97,13 +97,13 @@ const TreatmentPlan = ({ prescription }) => {
   const [approvePrescription] = useMutation(APPROVE_PRESCRIPTION, {
     onCompleted({ data }) {
       history.push("/physician");
-    }
+    },
   });
 
   const [denyPrescription] = useMutation(DENY_PRESCRIPTION, {
     onCompleted({ data }) {
       history.push("/physician");
-    }
+    },
   });
   // const displayOptions = drugDisplaySetup(subscription);
 
@@ -142,7 +142,7 @@ const TreatmentPlan = ({ prescription }) => {
         onClick={async () => {
           console.log(prescription);
           await approvePrescription({
-            variables: { id: prescription.id }
+            variables: { id: prescription.id },
           });
         }}
       >
@@ -156,7 +156,7 @@ const TreatmentPlan = ({ prescription }) => {
         onClick={async () => {
           console.log("DENIED");
           await denyPrescription({
-            variables: { id: prescription.id }
+            variables: { id: prescription.id },
           });
         }}
       >
@@ -181,13 +181,24 @@ const ShowBP = ({ q }) => {
     return <Typography color="error">No BP given</Typography>;
   }
 
-  const bloodPressure = `BP: ${q.bloodPressure.systolic || ""}/${q.bloodPressure
-    .diastolic || ""} mmHg`;
+  const bloodPressure = `BP: ${q.bloodPressure.systolic || ""}/${
+    q.bloodPressure.diastolic || ""
+  } mmHg`;
 
   return <Typography>{bloodPressure}</Typography>;
 };
 
-export const PatientInfo = props => {
+const UnderConstruction = () => {
+  const classes = useStyles();
+
+  return (
+    <Paper className={classes.container}>
+      <p>Under Construction</p>
+    </Paper>
+  );
+};
+
+export const PatientInfo = (props) => {
   const { prescription } = props;
   const classes = useStyles();
   console.log(prescription);
@@ -208,29 +219,34 @@ export const PatientInfo = props => {
           {prescription.user.addresses[0].telephone}
         </Typography>
         <Typography className={classes.age}>{`${age} years old`}</Typography>
-        <ShowBP q={prescription.visit.questionnaire} />
-        <Typography
-          color={
-            prescription.visit.questionnaire.allergies.explain
-              ? "error"
-              : "inherit"
-          }
-          className={classes.allergy}
-        >
-          Allergies:{" "}
-          {prescription.visit.questionnaire.allergies.explain || "None"}
-        </Typography>
-        <Typography
-          color={
-            prescription.visit.questionnaire.otherMedicines.explain
-              ? "error"
-              : ""
-          }
-          className={classes.allergy}
-        >
-          Medications:{" "}
-          {prescription.visit.questionnaire.otherMedicines.explain || "None"}
-        </Typography>
+        {prescription.type === "ED" && (
+          <>
+            <ShowBP q={prescription.visit.questionnaire} />
+            <Typography
+              color={
+                prescription.visit.questionnaire.allergies.explain
+                  ? "error"
+                  : "inherit"
+              }
+              className={classes.allergy}
+            >
+              Allergies:{" "}
+              {prescription.visit.questionnaire.allergies.explain || "None"}
+            </Typography>
+            <Typography
+              color={
+                prescription.visit.questionnaire.otherMedicines.explain
+                  ? "error"
+                  : ""
+              }
+              className={classes.allergy}
+            >
+              Medications:{" "}
+              {prescription.visit.questionnaire.otherMedicines.explain ||
+                "None"}
+            </Typography>
+          </>
+        )}
       </div>
       <TreatmentPlan prescription={prescription} />
     </Paper>

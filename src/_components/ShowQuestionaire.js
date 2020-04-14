@@ -3,26 +3,26 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: 16,
-    fontWeight: 500
+    fontWeight: 500,
   },
   item: {
     fontSize: 14,
     fontWeight: 400,
-    marginLeft: theme.spacing(2)
+    marginLeft: theme.spacing(2),
   },
   text: {
     fontSize: 14,
-    marginLeft: theme.spacing(4)
+    marginLeft: theme.spacing(4),
   },
   container: {
     flex: 1,
     overflow: "auto",
     padding: theme.spacing(2),
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
 }));
 
 const Heading = ({ heading }) => {
@@ -50,13 +50,13 @@ const Item = ({ item }) => {
   return <Typography className={classes.item}>{item}</Typography>;
 };
 
-const QueItem = props => {
+const QueItem = (props) => {
   const { options, heading, text } = props;
 
   return (
     <>
       <Heading heading={heading} />
-      {options.map(o => (
+      {options.map((o) => (
         <React.Fragment key={o.item}>
           <Item item={o.item} />
           <Text text={text} />
@@ -66,7 +66,7 @@ const QueItem = props => {
   );
 };
 
-const CheckBox = props => {
+const CheckBox = (props) => {
   const { answer, option, text } = props;
   const classes = useStyles();
   const color = option === "None" ? "textPrimary" : "error";
@@ -88,24 +88,24 @@ const erectionChoices = {
   options: [
     { id: "every_time", label: "Every time" },
     { id: "sometimes", label: "Sometimes" },
-    { id: "rarely", label: "Rarely" }
-  ]
+    { id: "rarely", label: "Rarely" },
+  ],
 };
 
 const problemsBegan = {
   heading: "How Erectile Dysfunction Started",
   options: [
     { id: "gradually", label: "Gradually" },
-    { id: "suddenly", label: "Suddenly" }
-  ]
+    { id: "suddenly", label: "Suddenly" },
+  ],
 };
 
 const newPartner = {
   heading: "New Partner",
   options: [
     { id: "yes", label: "Yes" },
-    { id: "no", label: "No" }
-  ]
+    { id: "no", label: "No" },
+  ],
 };
 
 const whenMasturbating = {
@@ -116,8 +116,8 @@ const whenMasturbating = {
     { id: "rarely", label: "Rarely" },
     { id: "occasionally", label: "Occasionally" },
     { id: "usually", label: "More than half the time" },
-    { id: "always", label: "Always" }
-  ]
+    { id: "always", label: "Always" },
+  ],
 };
 
 const onWaking = {
@@ -126,8 +126,8 @@ const onWaking = {
     { id: "", label: "N/A" },
     { id: "rarely", label: "Rarely" },
     { id: "occasionally", label: "Occasionally" },
-    { id: "everytime", label: "Everytime" }
-  ]
+    { id: "everytime", label: "Everytime" },
+  ],
 };
 
 const libido = {
@@ -136,13 +136,13 @@ const libido = {
     { id: "normal", label: "Normal." },
     {
       id: "less",
-      label: "Less than it was."
+      label: "Less than it was.",
     },
     {
       id: "abnormal",
-      label: "Abnormal, doesn't think about sex."
-    }
-  ]
+      label: "Abnormal, doesn't think about sex.",
+    },
+  ],
 };
 
 const depression = {
@@ -150,11 +150,11 @@ const depression = {
   options: [
     { id: "severalDays", label: "Several days" },
     { id: "moreThanHalf", label: "More than half of the days" },
-    { id: "nearlyEvery", label: "Every or nearly every day" }
-  ]
+    { id: "nearlyEvery", label: "Every or nearly every day" },
+  ],
 };
 
-const RadioOption = props => {
+const RadioOption = (props) => {
   const { choices, answer, text } = props;
   const options = [];
 
@@ -162,14 +162,24 @@ const RadioOption = props => {
   console.log(answer);
   console.log(choices.heading);
 
-  const choice = choices.options.find(c => c.id === answer);
+  const choice = choices.options.find((c) => c.id === answer);
   if (!choice) return null;
   options.push({ item: choice.label });
 
   return <QueItem heading={choices.heading} options={options} text={text} />;
 };
 
-const EdQuestionaire = props => {
+const UnderConstruction = () => {
+  const classes = useStyles();
+
+  return (
+    <Paper className={classes.container}>
+      <p>Under Construction</p>
+    </Paper>
+  );
+};
+
+const EdQuestionaire = (props) => {
   const { q } = props;
   const classes = useStyles();
 
@@ -436,8 +446,9 @@ const EdQuestionaire = props => {
   );
 };
 
-export const ShowQuestionaire = props => {
+export const ShowQuestionaire = (props) => {
   const { questionnaire } = props;
 
   if (questionnaire.type === "ED") return <EdQuestionaire q={questionnaire} />;
+  return <UnderConstruction />;
 };

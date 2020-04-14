@@ -13,19 +13,19 @@ import { ErrorMessage, ScriptPdf, Loading } from "./";
 import { tableIcons } from "./";
 import { ORDERLIST, PROCESS_ORDERS, SHIP_ORDERS } from "../Graphql";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   visitBox: {
-    flex: 1
+    flex: 1,
   },
   container: {
     overflow: "auto",
     width: "100%",
     marginLeft: "auto",
-    marginRight: "auto"
-  }
+    marginRight: "auto",
+  },
 }));
 
 export const Prescriptions = ({ status }) => {
@@ -34,10 +34,11 @@ export const Prescriptions = ({ status }) => {
 
   const { data, loading, error } = useQuery(ORDERLIST, {
     variables: { status },
-    pollInterval: 2000
+    pollInterval: 2000,
   });
 
   const [processOrders, { error: processError }] = useMutation(PROCESS_ORDERS);
+  //const [createBatch, {error: batchError }] = useMutation(CREATE_BATCH);
   const [shipOrders, { error: shipError }] = useMutation(SHIP_ORDERS);
   const classes = useStyles();
 
@@ -47,17 +48,17 @@ export const Prescriptions = ({ status }) => {
 
   const updateList = async () => {
     let idList = [];
-    idList = pdfData.map(p => p.id);
+    idList = pdfData.map((p) => p.id);
 
     console.log("IdList:", idList);
 
     if (status === "PENDING") {
       await processOrders({
-        variables: { idList: idList }
+        variables: { idList: idList },
       });
     } else {
       await shipOrders({
-        variables: { idList: idList }
+        variables: { idList: idList },
       });
     }
 
@@ -75,7 +76,7 @@ export const Prescriptions = ({ status }) => {
 
   let tableData = [];
   if (data.orders) {
-    tableData = data.orders.map(p => ({
+    tableData = data.orders.map((p) => ({
       id: p.id,
       status: p.status,
       name: `${p.user.lastName}, ${p.user.firstName}`,
@@ -103,7 +104,7 @@ export const Prescriptions = ({ status }) => {
       approvedDate: formatDate(p.prescription.approvedDate),
       refills: p.prescription.refillsRemaining,
       startDate: formatDate(p.prescription.startDate),
-      expireDate: formatDate(p.prescription.expireDate)
+      expireDate: formatDate(p.prescription.expireDate),
     }));
   }
 
@@ -143,42 +144,42 @@ export const Prescriptions = ({ status }) => {
         columns={[
           {
             title: "Name",
-            field: "name"
+            field: "name",
           },
           {
             title: "Product",
-            field: "product"
+            field: "product",
           },
           {
             title: "Qty",
             field: "productQuantity",
             type: "numeric",
             width: 60,
-            sorting: false
+            sorting: false,
           },
           {
             title: "Addon",
-            field: "addon"
+            field: "addon",
           },
           {
             title: "Qty",
             field: "addonQuantity",
             type: "numeric",
             sorting: false,
-            width: 60
+            width: 60,
           },
           {
             title: "Approved",
             field: "approvedDate",
             type: "date",
-            width: 120
-          }
+            width: 120,
+          },
         ]}
         data={tableData}
         options={{
           actionsCellStyle: {
             width: 50,
-            backgroundColor: "white"
+            backgroundColor: "white",
           },
           selection: true,
           selectionColumnProps: { style: { width: 75 } },
@@ -191,8 +192,8 @@ export const Prescriptions = ({ status }) => {
             backgroundColor: "#039be5",
             borderRightStyle: "solid",
             borderRightWidth: 1,
-            color: "white"
-          }
+            color: "white",
+          },
         }}
         actions={[
           {
@@ -202,8 +203,8 @@ export const Prescriptions = ({ status }) => {
             onClick: (evt, data) => {
               setPdfData(data);
               setOpen(true);
-            }
-          }
+            },
+          },
         ]}
       />
     </div>
