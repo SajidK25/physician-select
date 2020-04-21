@@ -76,6 +76,7 @@ export const EnterMessage = (props) => {
           <Button
             type="submit"
             variant="outlined"
+            size="small"
             color="primary"
             disabled={submitting || pristine || invalid}
             className={classes.button}
@@ -87,6 +88,7 @@ export const EnterMessage = (props) => {
           </Button>
           <Button
             type="submit"
+            size="small"
             variant="outlined"
             color="primary"
             disabled={submitting || pristine || invalid}

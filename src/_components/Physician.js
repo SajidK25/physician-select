@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
     width: "100%",
-    height: "calc(99vh - 40px)",
+    height: "calc(99vh - 50px)",
     padding: 4,
     maxWidth: 1200,
     marginLeft: "auto",
