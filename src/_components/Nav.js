@@ -5,53 +5,53 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ME_QUERY } from "../Graphql";
 import { Logout } from "./";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   navBar: {
-    height: 50,
+    height: 40,
     width: "100%",
     top: 0,
 
     backgroundColor: "rgb(255,255,255)",
     position: "absolute",
-    zIndex: 2100
+    zIndex: 2100,
   },
   active: {
     borderBottomStyle: "solid",
     borderBottomWidth: 4,
     borderBottomColor: theme.palette.primary.main,
-    color: "#2196f3 !important"
+    color: "#2196f3 !important",
   },
   link: {
     textAlign: "center",
     display: "block",
     width: "100%",
-    height: 50,
+    height: 40,
     fontStyle: "normal",
-    fontSize: 18,
+    fontSize: 17,
     color: "rgb(110, 119, 127)",
-    padding: "16px 0px",
+    padding: "10px 0px",
     background: "rgb(255, 255, 255)",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   list: {
     justifyContent: "center",
     display: "flex",
-    maxWidth: "100%",
+    maxWidth: "65%",
     margin: "0px auto",
     listStyleType: "none",
     padding: 0,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   item: {
     margin: 0,
-    width: "100%"
+    width: "100%",
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 const MenuItem = ({ to, label }) => {

@@ -5,19 +5,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import { setAccessToken } from "../accessToken";
 import { LOGOUT_MUTATION } from "../Graphql";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   logout: {
     textAlign: "center",
     display: "block",
     width: "100%",
-    height: 50,
+    height: 40,
     fontStyle: "normal",
-    fontSize: 18,
+    fontSize: 17,
     color: "rgb(110, 119, 127)",
-    padding: "16px 0px",
+    padding: "10px 0px",
     background: "rgb(255, 255, 255)",
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 }));
 
 export const Logout = () => {

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
-import { deepOrange } from "@material-ui/core/colors";
-import { ErrorMessage, Loading, PrescriptionListTile } from "./";
-import { PENDING_PRESCRIPTIONS } from "../Graphql";
+import { ErrorMessage, Loading, MessageListTile } from "./";
+import { GET_PATIENT_MESSAGES } from "../Graphql";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,16 +18,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     width: "100%",
     height: "100%",
+    maxWidth: 760,
     marginLeft: "auto",
     marginRight: "auto",
-  },
-  orange: {
-    height: 30,
-    width: 30,
-    fontSize: 14,
-    fontWeight: 600,
-    color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500],
   },
 }));
 
@@ -46,28 +38,23 @@ const sortPrescriptions = (a, b) => {
   return 0;
 };
 
-export const PrescriptionList = ({ status }) => {
+export const MessageList = () => {
   const history = useHistory();
   const [sorting, setSorting] = useState(false);
 
-  const { data, loading, error } = useQuery(PENDING_PRESCRIPTIONS, {
-    variables: { status },
+  const { data, loading, error } = useQuery(GET_PATIENT_MESSAGES, {
     pollInterval: 2000,
     onCompleted: (data) => {
-      if (data) {
-        setSorting(true);
-        data.pendingPrescriptions.sort(sortPrescriptions);
-        console.log("Sorted:", data.pendingPrescriptions);
-        setSorting(false);
-      }
+      //      if (data) {
+      //        setSorting(true);
+      //        data.pendingPrescriptions.sort(sortPrescriptions);
+      //        console.log("Sorted:", data.pendingPrescriptions);
+      //        setSorting(false);
+      //      }
       console.log("On completed", data);
     },
   });
   const classes = useStyles();
-
-  const handleClick = (id) => {
-    history.push("/visit/" + id);
-  };
 
   if (loading) return <Loading />;
   if (error) return <ErrorMessage error={error} />;
@@ -78,12 +65,8 @@ export const PrescriptionList = ({ status }) => {
 
   return (
     <div className={classes.container}>
-      {data.pendingPrescriptions.map((p) => (
-        <PrescriptionListTile
-          key={p.id}
-          prescription={p}
-          onClick={handleClick}
-        />
+      {data.getPatientMessages.map((m) => (
+        <MessageListTile key={m.id} message={m} />
       ))}
     </div>
   );

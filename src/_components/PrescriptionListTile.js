@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 import { indigo, green, yellow, red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/styles";
 import moment from "moment";
@@ -12,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: "100%",
     padding: theme.spacing(1),
-    marginBottom: theme.spacing(0.5),
+    marginBottom: theme.spacing(0.25),
     color: theme.palette.text.primary,
     cursor: "pointer",
     "&:hover": {
@@ -43,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
   nameItem: {
     flexBasis: "calc(40% - 58px)",
+    lineHeight: "17px",
     fontWeight: 500,
     [theme.breakpoints.down("sm")]: {
       flexBasis: "calc(45% - 30px)",
-      selfAlign: "flex-start",
     },
   },
   dateItem: {

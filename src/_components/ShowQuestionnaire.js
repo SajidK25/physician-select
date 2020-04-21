@@ -5,23 +5,22 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: 500,
   },
   item: {
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: 400,
     marginLeft: theme.spacing(2),
   },
   text: {
-    fontSize: 14,
+    fontSize: 11,
     marginLeft: theme.spacing(4),
   },
   container: {
     flex: 1,
     overflow: "auto",
-    padding: theme.spacing(2),
-    margin: theme.spacing(1),
+    padding: "4px 8px",
   },
 }));
 
@@ -446,7 +445,7 @@ const EdQuestionaire = (props) => {
   );
 };
 
-export const ShowQuestionaire = (props) => {
+export const ShowQuestionnaire = (props) => {
   const { questionnaire } = props;
 
   if (questionnaire.type === "ED") return <EdQuestionaire q={questionnaire} />;

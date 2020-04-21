@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 
 function rand() {
@@ -13,11 +14,11 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
     width: 600,
@@ -27,21 +28,21 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     marginTop: 100,
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
   },
   photoId: {
     marginLeft: theme.spacing(0.5),
     marginRight: theme.spacing(1),
-    width: "25%"
+    width: "25%",
   },
   bigPhoto: {
     marginLeft: "auto",
     marginRight: "auto",
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
-export const ShowPhoto = props => {
+export const ShowPhoto = (props) => {
   const { photoId } = props;
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -57,7 +58,7 @@ export const ShowPhoto = props => {
   };
 
   if (!photoId) {
-    return <div>-- No Photo --</div>;
+    return <Typography color="error">-- No Photo --</Typography>;
   }
 
   return (

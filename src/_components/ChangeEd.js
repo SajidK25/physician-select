@@ -14,14 +14,18 @@ import Typography from "@material-ui/core/Typography";
 import { SelectField, ErrorMessage } from "./";
 import { CURRENT_USER_QUERY } from "./User";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
+  button: {
+    margin: theme.spacing(0.25),
+    width: "calc(50% - 4px)",
+  },
 }));
 
 const SIGNIN_MUTATION = gql`
@@ -44,10 +48,10 @@ const drugIds = [
   { value: "SILDENAFIL50", label: "Sildenafil 50mg" },
   { value: "SILDENAFIL100", label: "Sildenafil 100mg" },
   { value: "MALE_DAILY", label: "Mail Daily" },
-  { value: "MALE_DAILY_PLUS", label: "Male Daily + Tadalafil 5mg" }
+  { value: "MALE_DAILY_PLUS", label: "Male Daily + Tadalafil 5mg" },
 ];
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
   if (!values.password) {
     errors.password = "Password is required";
@@ -61,7 +65,7 @@ const validate = values => {
   return errors;
 };
 
-export const ChangeEd = props => {
+export const ChangeEd = (props) => {
   const classes = useStyles();
   const { prescription } = props;
   const [open, setOpen] = useState(false);
@@ -82,7 +86,6 @@ export const ChangeEd = props => {
         className={classes.button}
         color="primary"
         variant="outlined"
-        fullWidth={true}
       >
         Change
       </Button>
@@ -96,7 +99,7 @@ export const ChangeEd = props => {
           <Form
             initialValues={{ startId: drugId }}
             validate={validate}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
               console.log("Variable:", values);
               setOpen(false);
               //  await login({ variables: { ...values } });

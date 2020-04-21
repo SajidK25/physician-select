@@ -17,17 +17,13 @@ const useStyles = makeStyles((theme) => ({
   appContent: {
     backgroundColor: "#FAFAFA",
     flex: 1,
-    overflowY: "auto",
-    paddingTop: 60,
+    paddingTop: 40,
   },
   appContentInner: {
     padding: "0 4px",
-    width: "90%",
+    width: "100%",
     maxWidth: "100%",
     margin: "0 auto",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
   },
   appMain: {
     position: "relative",
