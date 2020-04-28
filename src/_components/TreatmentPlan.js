@@ -129,6 +129,7 @@ export const TreatmentPlan = ({ prescription }) => {
       <Button
         className={classes.button}
         color="primary"
+        size="small"
         variant="outlined"
         onClick={onApproved}
       >
@@ -137,6 +138,7 @@ export const TreatmentPlan = ({ prescription }) => {
       <Button
         className={classes.button}
         color="secondary"
+        size="small"
         variant="outlined"
         onClick={onDenied}
       >
@@ -146,6 +148,7 @@ export const TreatmentPlan = ({ prescription }) => {
       <Button
         className={classes.button}
         color="primary"
+        size="small"
         variant="outlined"
         onClick={() => history.push("/physician")}
       >

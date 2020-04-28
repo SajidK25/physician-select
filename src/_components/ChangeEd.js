@@ -85,6 +85,7 @@ export const ChangeEd = (props) => {
         onClick={handleClickOpen}
         className={classes.button}
         color="primary"
+        size="small"
         variant="outlined"
       >
         Change

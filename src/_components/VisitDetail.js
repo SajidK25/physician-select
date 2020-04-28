@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   infoContainer: {
     display: "flex",
     flexDirection: "row",
-    height: "calc(90vh - 60px)",
+    height: "calc(90vh - 50px)",
   },
   sectionContainer: {
     flex: 1,

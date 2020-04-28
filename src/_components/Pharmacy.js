@@ -6,9 +6,9 @@ import Tab from "@material-ui/core/Tab";
 import { TabPanel, a11yProps } from "./";
 import { Prescriptions } from "./";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: 50
+    marginBottom: 50,
   },
   paper: {
     marginTop: 4,
@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "auto",
     marginRight: "auto",
     flexDirection: "column",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
 export const Pharmacy = () => {

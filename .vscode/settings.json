@@ -1,11 +1,28 @@
 {
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#52ff33",
-    "titleBar.activeForeground": "#ffffff",
-    "titleBar.inactiveBackground": "#0d4110",
-    "titleBar.inactiveForeground": "#243d41"
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#52ff3399",
+    "titleBar.inactiveForeground": "#15202b99",
+    "activityBar.activeBackground": "#7dff66",
+    "activityBar.activeBorder": "#8093ff",
+    "activityBar.background": "#7dff66",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#8093ff",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#52ff33",
+    "statusBar.border": "#52ff33",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#27ff00",
+    "titleBar.border": "#52ff33"
   },
   "git.ignoreLimitWarning": true,
   "spellright.language": ["en"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext"
+  ],
+  "peacock.color": "#52ff33"
 }
