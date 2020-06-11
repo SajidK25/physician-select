@@ -1,11 +1,11 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
+import { ErrorMessage } from "../_components";
 import { ChangeEd } from "./";
 import { useConfirm } from "../Confirmation";
 import { APPROVE_PRESCRIPTION, DENY_PRESCRIPTION } from "../Graphql";
@@ -62,45 +62,60 @@ export const TreatmentPlan = ({ prescription }) => {
   const history = useHistory();
   const confirm = useConfirm();
 
-  const [approvePrescription] = useMutation(APPROVE_PRESCRIPTION, {
-    onCompleted({ data }) {
-      history.push("/physician");
-    },
-  });
+  const [approvePrescription, { error: approveError }] = useMutation(
+    APPROVE_PRESCRIPTION,
+    {
+      onCompleted({ data }) {
+        history.push("/physician");
+      },
+    }
+  );
 
-  const [denyPrescription] = useMutation(DENY_PRESCRIPTION, {
-    onCompleted({ data }) {
-      history.push("/physician");
-    },
-  });
+  const [denyPrescription, { error: denyError }] = useMutation(
+    DENY_PRESCRIPTION,
+    {
+      onCompleted({ data }) {
+        history.push("/physician");
+      },
+    }
+  );
 
   const onDenied = () => {
     confirm({
       description: "Please confirm that you want to decline this request.",
       title: "Decline Prescription Request",
-    }).then(
-      async () =>
+    }).then(async () => {
+      try {
         await denyPrescription({
           variables: { id: prescription.id },
-        })
-    );
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    });
   };
 
   const onApproved = () => {
     confirm({
       description: "Please confirm that you want to approve this request.",
       title: "Approve Prescription Request",
-    }).then(
-      async () =>
+    }).then(async () => {
+      try {
         await approvePrescription({
           variables: { id: prescription.id },
-        })
-    );
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    });
   };
   // const displayOptions = drugDisplaySetup(subscription);
 
   return (
     <Paper className={classes.treatmentPlan}>
+      <ErrorMessage error={approveError} />
+      <ErrorMessage error={denyError} />
+
       <div className={classes.treatmentHeading}>Treatment Preference</div>
       <Divider />
       <div className={classes.treatmentContainer}>

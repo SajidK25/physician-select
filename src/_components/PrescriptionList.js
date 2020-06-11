@@ -78,13 +78,16 @@ export const PrescriptionList = ({ status }) => {
 
   return (
     <div className={classes.container}>
-      {data.pendingPrescriptions.map((p) => (
-        <PrescriptionListTile
-          key={p.id}
-          prescription={p}
-          onClick={handleClick}
-        />
-      ))}
+      {data.pendingPrescriptions.map(
+        (p) =>
+          p.type !== "SUPPLEMENT" && (
+            <PrescriptionListTile
+              key={p.id}
+              prescription={p}
+              onClick={handleClick}
+            />
+          )
+      )}
     </div>
   );
 };
