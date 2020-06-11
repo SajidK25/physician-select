@@ -61,6 +61,7 @@ export const TreatmentPlan = ({ prescription }) => {
   const classes = useStyles();
   const history = useHistory();
   const confirm = useConfirm();
+  console.log("Prescription:", prescription);
 
   const [approvePrescription, { error: approveError }] = useMutation(
     APPROVE_PRESCRIPTION,
@@ -116,7 +117,9 @@ export const TreatmentPlan = ({ prescription }) => {
       <ErrorMessage error={approveError} />
       <ErrorMessage error={denyError} />
 
-      <div className={classes.treatmentHeading}>Treatment Preference</div>
+      <div className={classes.treatmentHeading}>
+        Treatment Preference - Status: {prescription.status}
+      </div>
       <Divider />
       <div className={classes.treatmentContainer}>
         <div className={classes.drugDisplay}>
@@ -147,6 +150,7 @@ export const TreatmentPlan = ({ prescription }) => {
         size="small"
         variant="outlined"
         onClick={onApproved}
+        disabled={prescription.status === "ACTIVE"}
       >
         Approve
       </Button>
