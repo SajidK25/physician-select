@@ -24,5 +24,6 @@
     "latex",
     "plaintext"
   ],
-  "peacock.color": "#52ff33"
+  "peacock.color": "#52ff33",
+  "editor.wordWrap": "on"
 }

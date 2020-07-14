@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Nav } from "../_components";
+import { Nav } from "../_components";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

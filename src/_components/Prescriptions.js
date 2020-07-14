@@ -50,8 +50,6 @@ export const Prescriptions = ({ status }) => {
     let idList = [];
     idList = pdfData.map((p) => p.id);
 
-    console.log("IdList:", idList);
-
     if (status === "PENDING") {
       await processOrders({
         variables: { idList: idList },
@@ -62,8 +60,6 @@ export const Prescriptions = ({ status }) => {
       });
     }
 
-    console.log("Status: ", status);
-    console.log("UpdateList", pdfData);
     setOpen(false);
   };
 

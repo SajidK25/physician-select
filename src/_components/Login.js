@@ -12,10 +12,10 @@ import { RenderStdTextField, ErrorMessage } from "./";
 import { setAccessToken } from "../accessToken";
 import { ME_QUERY, LOGIN_MUTATION } from "../Graphql";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -24,14 +24,14 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "auto",
     marginRight: "auto",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
   if (!values.password) {
     errors.password = "Password is required";
@@ -45,7 +45,7 @@ const validate = values => {
   return errors;
 };
 
-export const Login = props => {
+export const Login = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -70,12 +70,11 @@ export const Login = props => {
                 store.writeQuery({
                   query: ME_QUERY,
                   data: {
-                    me: data.login.user
-                  }
+                    me: data.login.user,
+                  },
                 });
-              }
+              },
             });
-            console.log(response);
 
             if (response && response.data) {
               setAccessToken(response.data.login.accessToken);

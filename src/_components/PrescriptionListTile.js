@@ -110,7 +110,6 @@ const useAvatarStyles = makeStyles((theme) => ({
 
 const StatusAvatar = ({ status }) => {
   const classes = useAvatarStyles();
-  console.log("Status", status);
 
   return (
     <div className={classes.statusAvatar}>
@@ -139,6 +138,7 @@ const colors = [
   { type: "ALLERGY", color: "#00c0c0" },
   { type: "JOY", color: "#ffc500" },
   { type: "SLEEP", color: "#00bb00" },
+  { type: "WEIGHT", color: "#7700b2" },
   { type: "SUPPLEMENT", color: "#00bb00" },
 ];
 
@@ -159,10 +159,7 @@ export const PrescriptionListTile = (props) => {
   const { prescription } = props;
   const history = useHistory();
   const classes = useStyles();
-  const timeDeadline = moment().diff(
-    moment(prescription.createdAt).add(1440, "minutes"),
-    "minutes"
-  );
+  const timeDeadline = moment().diff(moment(prescription.createdAt).add(1440, "minutes"), "minutes");
   return (
     <Paper
       className={classes.paper}
@@ -179,21 +176,13 @@ export const PrescriptionListTile = (props) => {
             <StatusAvatar status={prescription.status} />
           </div>
         </div>
-        <div className={classes.nameItem}>
-          {`${prescription.user.lastName}, ${prescription.user.firstName}`}
-        </div>
+        <div className={classes.nameItem}>{`${prescription.user.lastName}, ${prescription.user.firstName}`}</div>
         <div className={classes.productContainer}>
-          <div className={classes.productItem}>
-            {prescription.product.display}
-          </div>
-          <div className={classes.productItem}>
-            {prescription.addon ? prescription.addon.display : ""}
-          </div>
+          <div className={classes.productItem}>{prescription.product.display}</div>
+          <div className={classes.productItem}>{prescription.addon ? prescription.addon.display : ""}</div>
         </div>
         <div className={classes.dateItem}>
-          <Typography color={timeDeadline > 0 ? "error" : "textPrimary"}>
-            {moment(prescription.createdAt).fromNow()}
-          </Typography>
+          <Typography color={timeDeadline > 0 ? "error" : "textPrimary"}>{moment(prescription.createdAt).fromNow()}</Typography>
         </div>
       </div>
     </Paper>

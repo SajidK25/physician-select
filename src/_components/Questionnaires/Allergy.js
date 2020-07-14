@@ -368,8 +368,6 @@ export const AllergyQuestionnaire = (props) => {
   const { q } = props;
   const classes = useStyles();
 
-  console.log("Q:", q);
-
   return (
     <Paper className={classes.container}>
       <NoseIssues q={q} />

@@ -32,21 +32,11 @@ const useStyles = makeStyles((theme) => ({
 const SleepProblems = ({ q }) => (
   <>
     <Heading heading="Sleep Problems" />
-    <CheckBox
-      answer={q.sleepProblems.falling}
-      option={"Falling asleep"}
-      text={q.sleepProblems.fallingExplain}
-    />
+    <CheckBox answer={q.sleepProblems.falling} option={"Falling asleep"} text={q.sleepProblems.fallingExplain} />
     <CheckBox answer={q.sleepProblems.staying} option={"Staying asleep"} />
-    <CheckBox
-      answer={q.sleepProblems.stayingAwake}
-      option={"Staying awake during day"}
-    />
+    <CheckBox answer={q.sleepProblems.stayingAwake} option={"Staying awake during day"} />
     <CheckBox answer={q.sleepProblems.nightmares} option={"Nightmares"} />
-    <CheckBox
-      answer={q.sleepProblems.unexpected}
-      option={"Fall asleep unexpectedly"}
-    />
+    <CheckBox answer={q.sleepProblems.unexpected} option={"Fall asleep unexpectedly"} />
     <CheckBox
       answer={q.sleepProblems.accident}
       option={"Caused accident (or near-miss)"}
@@ -66,16 +56,8 @@ const OtherMedications = ({ q }) => (
     <CheckBox answer={q.otherMeds.stJohnsWart} option="St John's Wort" />
     <CheckBox answer={q.otherMeds.terbinafine} option="Terbinafine" />
     <CheckBox answer={q.otherMeds.tolazamide} option="Tolazamide" />
-    <CheckBox
-      answer={q.otherMeds.antiDepressants}
-      option="Antidepressants"
-      text={q.otherMeds.heartMedsExplain}
-    />
-    <CheckBox
-      answer={q.otherMeds.heartMeds}
-      option="Heart Meds"
-      text={q.otherMeds.heartMedsExplain}
-    />
+    <CheckBox answer={q.otherMeds.antiDepressants} option="Antidepressants" text={q.otherMeds.heartMedsExplain} />
+    <CheckBox answer={q.otherMeds.heartMeds} option="Heart Meds" text={q.otherMeds.heartMedsExplain} />
     <CheckBox answer={q.otherMeds.mesoridazine} option="Mesoridazine" />
     <CheckBox answer={q.otherMeds.ketoconazole} option="Ketoconazole" />
     <CheckBox answer={q.otherMeds.safinamide} option="Safinamide" />
@@ -86,23 +68,11 @@ const OtherMedications = ({ q }) => (
 const SleepIssues = ({ q }) => (
   <>
     <Heading heading="Sleep Issues" />
-    <CheckBox
-      answer={q.sleepIssues.takeSomething}
-      option="Take something"
-      text={q.sleepIssues.takeSomethingExplain}
-    />
-    <CheckBox
-      answer={q.sleepIssues.alcohol}
-      option="Alcohol"
-      text={q.sleepIssues.alcoholExplain}
-    />
+    <CheckBox answer={q.sleepIssues.takeSomething} option="Take something" text={q.sleepIssues.takeSomethingExplain} />
+    <CheckBox answer={q.sleepIssues.alcohol} option="Alcohol" text={q.sleepIssues.alcoholExplain} />
     <CheckBox answer={q.sleepIssues.sad} option="Feel sad" />
     <CheckBox answer={q.sleepIssues.nervous} option="Feel nervous" />
-    <CheckBox
-      answer={q.sleepIssues.unusualHours}
-      option="Unusual hours"
-      text={q.sleepIssues.unusualHoursExplain}
-    />
+    <CheckBox answer={q.sleepIssues.unusualHours} option="Unusual hours" text={q.sleepIssues.unusualHoursExplain} />
     <CheckBox answer={q.sleepIssues.none} option="None" />
   </>
 );
@@ -113,10 +83,7 @@ const SleepHealth = ({ q }) => (
     <CheckBox answer={q.sleepHealth.legCramps} option="Leg cramps" />
     <CheckBox answer={q.sleepHealth.headache} option="Awaken with headache" />
     <CheckBox answer={q.sleepHealth.urinate} option="Urinate often" />
-    <CheckBox
-      answer={q.sleepHealth.difficultyBreathing}
-      option="Difficulty breathing"
-    />
+    <CheckBox answer={q.sleepHealth.difficultyBreathing} option="Difficulty breathing" />
     <CheckBox answer={q.sleepHealth.sweat} option="Sweat excessively" />
     <CheckBox answer={q.sleepHealth.dryMouth} option="Dry mouth/sore throat" />
     <CheckBox answer={q.sleepHealth.none} option="None" />
@@ -126,21 +93,12 @@ const SleepHealth = ({ q }) => (
 const SleepBehavior = ({ q }) => (
   <>
     <Heading heading="Sleep Behavior" />
-    <HeadingWithText
-      heading="Bedtime (weekdays)"
-      text={moment(q.sleepBehavior.bedtimeWeekday).format("h:mma")}
-    />
-    <HeadingWithText
-      heading="Bedtime (weekends)"
-      text={moment(q.sleepBehavior.bedtimeWeekend).format("h:mma")}
-    />
+    <HeadingWithText heading="Bedtime (weekdays)" text={moment(q.sleepBehavior.bedtimeWeekday).format("h:mma")} />
+    <HeadingWithText heading="Bedtime (weekends)" text={moment(q.sleepBehavior.bedtimeWeekend).format("h:mma")} />
     {q.sleepBehaviorNaps && (
       <>
         <HeadingWithText heading="Naps" text={q.sleepBehavior.naps} />
-        <HeadingWithText
-          heading="Awaken refreshed"
-          text={q.sleepBehavior.awakenRefreshed}
-        />
+        <HeadingWithText heading="Awaken refreshed" text={q.sleepBehavior.awakenRefreshed} />
       </>
     )}
   </>
@@ -148,16 +106,8 @@ const SleepBehavior = ({ q }) => (
 const SleepHistory = ({ q }) => (
   <>
     <Heading heading="Sleep History" />
-    <CheckBox
-      answer={q.sleepHistory.sleepStudy}
-      option="Sleep study"
-      text={q.sleepHistory.sleepStudyExplain}
-    />
-    <CheckBox
-      answer={q.sleepHistory.useCPAP}
-      option="Use CPAP or BiPAP"
-      text={q.sleepHistory.useCPAPExplain}
-    />
+    <CheckBox answer={q.sleepHistory.sleepStudy} option="Sleep study" text={q.sleepHistory.sleepStudyExplain} />
+    <CheckBox answer={q.sleepHistory.useCPAP} option="Use CPAP or BiPAP" text={q.sleepHistory.useCPAPExplain} />
     <CheckBox answer={q.sleepHistory.tonsilsRemoved} option="Tonsils removed" />
     <CheckBox answer={q.sleepHistory.sinusSurgery} option="Sinus surgery" />
     <CheckBox answer={q.sleepHistory.brokenNose} option="Broken nose" />
@@ -167,14 +117,8 @@ const SleepHistory = ({ q }) => (
       option="Conditions that disrupt sleep"
       text={q.sleepHistory.disruptConditionsExplain}
     />
-    <CheckBox
-      answer={q.sleepHistory.childProblems}
-      option="Childhood problems"
-    />
-    <CheckBox
-      answer={q.sleepHistory.hadExam}
-      option="Exam in last five years"
-    />
+    <CheckBox answer={q.sleepHistory.childProblems} option="Childhood problems" />
+    <CheckBox answer={q.sleepHistory.hadExam} option="Exam in last five years" />
     <CheckBox answer={q.sleepHistory.none} option="None" />
   </>
 );
@@ -183,15 +127,8 @@ const SleepSymptoms = ({ q }) => (
   <>
     <Heading heading="Sleep Symptoms" />
     <CheckBox answer={q.sleepSymptoms.restlessLegs} option="Restless legs" />
-    <CheckBox
-      answer={q.sleepSymptoms.snoring}
-      option="Snore, stop breathing, gasp..."
-    />
-    <CheckBox
-      answer={q.sleepSymptoms.kicking}
-      option="Kicking partner"
-      text={q.sleepSymptoms.kickingExplain}
-    />
+    <CheckBox answer={q.sleepSymptoms.snoring} option="Snore, stop breathing, gasp..." />
+    <CheckBox answer={q.sleepSymptoms.kicking} option="Kicking partner" text={q.sleepSymptoms.kickingExplain} />
     <CheckBox answer={q.sleepSymptoms.grindTeeth} option="Grind teeth" />
     <CheckBox answer={q.sleepSymptoms.none} option="None" />
   </>
@@ -220,11 +157,7 @@ const MedicalHistory = ({ q }) => (
       option="Cardiac arrhythmias"
       text={q.sleepMedHistory.cardiacArrhythmiasExplain}
     />
-    <CheckBox
-      answer={q.sleepMedHistory.stroke}
-      option="Stroke"
-      text={q.sleepMedHistory.strokeExplain}
-    />
+    <CheckBox answer={q.sleepMedHistory.stroke} option="Stroke" text={q.sleepMedHistory.strokeExplain} />
     <CheckBox
       answer={q.sleepMedHistory.thyroidDisease}
       option="Thyroid disease"
@@ -240,31 +173,15 @@ const MedicalHistory = ({ q }) => (
       option="Pulmonary hypertension"
       text={q.sleepMedHistory.pulmonaryHypertensionExplain}
     />
-    <CheckBox
-      answer={q.sleepMedHistory.diabetes}
-      option="Diabetes"
-      text={q.sleepMedHistory.diabetesExplain}
-    />
-    <CheckBox
-      answer={q.sleepMedHistory.parkinsons}
-      option="Parkinsons"
-      text={q.sleepMedHistory.parkinsonsExplain}
-    />
-    <CheckBox
-      answer={q.sleepMedHistory.anemia}
-      option="Anemia"
-      text={q.sleepMedHistory.anemiaExplain}
-    />
+    <CheckBox answer={q.sleepMedHistory.diabetes} option="Diabetes" text={q.sleepMedHistory.diabetesExplain} />
+    <CheckBox answer={q.sleepMedHistory.parkinsons} option="Parkinsons" text={q.sleepMedHistory.parkinsonsExplain} />
+    <CheckBox answer={q.sleepMedHistory.anemia} option="Anemia" text={q.sleepMedHistory.anemiaExplain} />
     <CheckBox
       answer={q.sleepMedHistory.heartburn}
       option="Heartburn/Reflux"
       text={q.sleepMedHistory.heartburnExplain}
     />
-    <CheckBox
-      answer={q.sleepMedHistory.arthritis}
-      option="Arthritis"
-      text={q.sleepMedHistory.arthritisExplain}
-    />
+    <CheckBox answer={q.sleepMedHistory.arthritis} option="Arthritis" text={q.sleepMedHistory.arthritisExplain} />
     <CheckBox
       answer={q.sleepMedHistory.sexualDysfunction}
       option="Sexual dysfunction"
@@ -280,31 +197,15 @@ const MedicalHistory = ({ q }) => (
       option="Depression/Anxiety"
       text={q.sleepMedHistory.depressionExplain}
     />
-    <CheckBox
-      answer={q.sleepMedHistory.seizures}
-      option="Seizures"
-      text={q.sleepMedHistory.seizuresExplain}
-    />
-    <CheckBox
-      answer={q.sleepMedHistory.menopause}
-      option="Menopause"
-      text={q.sleepMedHistory.menopauseExplain}
-    />
+    <CheckBox answer={q.sleepMedHistory.seizures} option="Seizures" text={q.sleepMedHistory.seizuresExplain} />
+    <CheckBox answer={q.sleepMedHistory.menopause} option="Menopause" text={q.sleepMedHistory.menopauseExplain} />
     <CheckBox
       answer={q.sleepMedHistory.bloodDonations}
       option="Frequent blood donations"
       text={q.sleepMedHistory.bloodDonationsExplain}
     />
-    <CheckBox
-      answer={q.sleepMedHistory.lupus}
-      option="Lupus"
-      text={q.sleepMedHistory.lupusExplain}
-    />
-    <CheckBox
-      answer={q.sleepMedHistory.cancer}
-      option="Cancer"
-      text={q.sleepMedHistory.cancerExplain}
-    />
+    <CheckBox answer={q.sleepMedHistory.lupus} option="Lupus" text={q.sleepMedHistory.lupusExplain} />
+    <CheckBox answer={q.sleepMedHistory.cancer} option="Cancer" text={q.sleepMedHistory.cancerExplain} />
     <CheckBox
       answer={q.sleepMedHistory.congestion}
       option="Nasal allergies/congestion"
@@ -324,27 +225,16 @@ const SleepHabits = ({ q }) => (
     <Heading heading="Sleep Habits" />
     <CheckBox answer={q.sleepHabits.watchTV} option="Watch TV/read in bed" />
     <CheckBox answer={q.sleepHabits.shareBed} option="Share bed" />
-    <CheckBox
-      answer={q.sleepHabits.partnerDisorder}
-      option="Partner with sleep disorder"
-    />
+    <CheckBox answer={q.sleepHabits.partnerDisorder} option="Partner with sleep disorder" />
     <CheckBox answer={q.sleepHabits.pets} option="Pets" />
-    <CheckBox
-      answer={q.sleepHabits.drinkCaffeine}
-      option="Drink caffeine"
-      text={q.sleepHabits.drinkCaffeineExplain}
-    />
+    <CheckBox answer={q.sleepHabits.drinkCaffeine} option="Drink caffeine" text={q.sleepHabits.drinkCaffeineExplain} />
     <CheckBox answer={q.sleepHabits.exercise} option="Exercise regularly" />
     <CheckBox answer={q.sleepHabits.none} option="None" />
   </>
 );
 
 const Dozing = ({ heading, answer }) => (
-  <>
-    {answer && answer !== "Never" && (
-      <HeadingWithText heading={heading} text={answer} isRed={true} />
-    )}
-  </>
+  <>{answer && answer !== "Never" && <HeadingWithText heading={heading} text={answer} isRed={true} />}</>
 );
 
 const SleepDozing = ({ q }) => (
@@ -384,8 +274,6 @@ const SleepFamily = ({ q }) => (
 export const SleepQuestionnaire = (props) => {
   const { q } = props;
   const classes = useStyles();
-
-  console.log("Q:", q);
 
   return (
     <Paper className={classes.container}>

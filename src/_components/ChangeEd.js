@@ -101,7 +101,6 @@ export const ChangeEd = (props) => {
             initialValues={{ startId: drugId }}
             validate={validate}
             onSubmit={async (values) => {
-              console.log("Variable:", values);
               setOpen(false);
               //  await login({ variables: { ...values } });
             }}

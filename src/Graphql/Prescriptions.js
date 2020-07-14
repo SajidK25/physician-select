@@ -96,6 +96,7 @@ export const PHARMACYLIST_QUERY = gql`
             firstName
             lastName
             birthDate
+            gender
           }
           address {
             addressOne
@@ -163,6 +164,7 @@ export const GET_PRESCRIPTION = gql`
         lastName
         birthDate
         photoId
+        gender
         addresses {
           active
           addressOne

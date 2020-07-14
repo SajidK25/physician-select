@@ -39,8 +39,6 @@ export const ShowMessage = ({ message }) => {
     borderRadius: "8px 8px 0 8px",
   };
 
-  console.log("Message", message);
-
   if (!message.physician) {
     messageStyle.justify = "start";
     messageStyle.color = "#DDF6FF";
@@ -50,8 +48,6 @@ export const ShowMessage = ({ message }) => {
   if (message.private) messageStyle.color = "#FFF3DD";
 
   const classes = useStyles(messageStyle);
-
-  console.log("Message", message);
 
   return (
     <div className={classes.messageRow}>

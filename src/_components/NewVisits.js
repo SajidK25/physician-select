@@ -16,18 +16,18 @@ import { ErrorMessage, ScriptPdf, Loading } from "./";
 import { tableIcons } from "./";
 import { PENDING_PRESCRIPTIONS } from "../Graphql";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   visitBox: {
-    flex: 1
+    flex: 1,
   },
   container: {
     overflow: "auto",
     width: "100%",
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
   },
   orange: {
     height: 30,
@@ -35,25 +35,25 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14,
     fontWeight: 600,
     color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500]
-  }
+    backgroundColor: deepOrange[500],
+  },
 }));
 
-const useAvatarStyles = makeStyles(theme => ({
+const useAvatarStyles = makeStyles((theme) => ({
   orange: {
     height: 30,
     width: 30,
     fontSize: 14,
     fontWeight: 600,
     color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500]
-  }
+    backgroundColor: deepOrange[500],
+  },
 }));
 
-const useStatusAvatarStyles = makeStyles(theme => ({
+const useStatusAvatarStyles = makeStyles((theme) => ({
   statusAvatar: {
     fontSize: 14,
-    fontWeight: 500
+    fontWeight: 500,
   },
 
   pending: {
@@ -61,27 +61,26 @@ const useStatusAvatarStyles = makeStyles(theme => ({
     width: 20,
     fontSize: 12,
     color: theme.palette.getContrastText(green[800]),
-    backgroundColor: green[500]
+    backgroundColor: green[500],
   },
   active: {
     height: 20,
     width: 20,
     fontSize: 12,
     color: theme.palette.getContrastText(green[800]),
-    backgroundColor: green[800]
+    backgroundColor: green[800],
   },
   denied: {
     height: 20,
     width: 20,
     fontSize: 12,
     color: theme.palette.getContrastText(red[500]),
-    backgroundColor: red[500]
-  }
+    backgroundColor: red[500],
+  },
 }));
 
 const StatusAvatar = ({ status }) => {
   const classes = useStatusAvatarStyles();
-  console.log("Status", status);
 
   return (
     <div className={classes.statusAvatar}>
@@ -131,7 +130,7 @@ export const NewVisits = ({ status }) => {
 
   const { data, loading, error, fetchMore } = useQuery(PENDING_PRESCRIPTIONS, {
     variables: { status },
-    pollInterval: 2000
+    pollInterval: 2000,
   });
   const classes = useStyles();
 
@@ -140,8 +139,6 @@ export const NewVisits = ({ status }) => {
   };
 
   const updateList = () => {
-    console.log("Status: ", status);
-    console.log("UpdateList", pdfData);
     setOpen(false);
   };
 
@@ -149,11 +146,9 @@ export const NewVisits = ({ status }) => {
   if (error) return <ErrorMessage error={error} />;
   if (!data) return <p>No new visits</p>;
 
-  console.log("Data:", data);
-
   let tableData = [];
   if (data.pendingPrescriptions) {
-    tableData = data.pendingPrescriptions.map(p => ({
+    tableData = data.pendingPrescriptions.map((p) => ({
       id: p.id,
       type: p.type,
       status: p.status,
@@ -162,7 +157,7 @@ export const NewVisits = ({ status }) => {
       firstName: p.user.firstName,
       product: p.product.display,
       addon: p.addon ? p.addon.display : "",
-      added: p.createdAt
+      added: p.createdAt,
     }));
   }
 
@@ -195,32 +190,32 @@ export const NewVisits = ({ status }) => {
             title: "Type",
             field: "type",
             width: 60,
-            render: rowData => <TypeAvatar type={rowData.type} />
+            render: (rowData) => <TypeAvatar type={rowData.type} />,
           },
           {
             title: "Stat",
             field: "status",
             width: 60,
-            render: rowData => <StatusAvatar status={rowData.status} />
+            render: (rowData) => <StatusAvatar status={rowData.status} />,
           },
           {
             title: "Name",
-            field: "name"
+            field: "name",
           },
           {
             title: "Product",
-            field: "product"
+            field: "product",
           },
           {
             title: "Addon",
-            field: "addon"
+            field: "addon",
           },
           {
             title: "Entered",
             field: "added",
             width: 150,
-            render: rowData => <EnteredDate enteredDate={rowData.added} />
-          }
+            render: (rowData) => <EnteredDate enteredDate={rowData.added} />,
+          },
         ]}
         data={tableData}
         options={{
@@ -236,8 +231,8 @@ export const NewVisits = ({ status }) => {
             backgroundColor: "#039be5",
             borderRightStyle: "solid",
             borderRightWidth: 1,
-            color: "white"
-          }
+            color: "white",
+          },
         }}
       />
     </div>

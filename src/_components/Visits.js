@@ -5,23 +5,23 @@ import Button from "@material-ui/core/Button";
 import { ErrorMessage, VisitTile, Loading } from "./";
 import { VISITLIST_QUERY } from "../Graphql";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   visitBox: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,
     overflow: "auto",
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 export const Visits = () => {
   const { data, loading, error, fetchMore } = useQuery(VISITLIST_QUERY, {
-    pollInterval: 1500
+    pollInterval: 1500,
   });
   const classes = useStyles();
 
@@ -29,13 +29,11 @@ export const Visits = () => {
   if (error) return <ErrorMessage error={error} />;
   if (!data) return <p>No new visits</p>;
 
-  console.log("Data:", data);
-
   return (
     <div className={classes.container}>
       {data.prescriptions &&
         data.prescriptions.edges &&
-        data.prescriptions.edges.map(prescription => (
+        data.prescriptions.edges.map((prescription) => (
           <VisitTile
             key={prescription.node.id}
             prescription={prescription.node}
@@ -49,7 +47,7 @@ export const Visits = () => {
             onClick={() =>
               fetchMore({
                 variables: {
-                  after: data.prescriptions.pageInfo.endCursor
+                  after: data.prescriptions.pageInfo.endCursor,
                 },
                 updateQuery: (prev, { fetchMoreResult, ...rest }) => {
                   if (!fetchMoreResult) return prev;
@@ -59,11 +57,11 @@ export const Visits = () => {
                       ...fetchMoreResult.visits,
                       prescriptions: [
                         ...prev.prescriptions.edges,
-                        ...fetchMoreResult.prescriptions.edges
-                      ]
-                    }
+                        ...fetchMoreResult.prescriptions.edges,
+                      ],
+                    },
                   };
-                }
+                },
               })
             }
           >
@@ -77,7 +75,7 @@ export const Visits = () => {
             onClick={() =>
               fetchMore({
                 variables: {
-                  after: data.prescriptions.pageInfo.startCursor
+                  after: data.prescriptions.pageInfo.startCursor,
                 },
                 updateQuery: (prev, { fetchMoreResult, ...rest }) => {
                   if (!fetchMoreResult) return prev;
@@ -87,11 +85,11 @@ export const Visits = () => {
                       ...fetchMoreResult.prescriptions,
                       prescriptions: [
                         ...prev.visits.edges,
-                        ...fetchMoreResult.prescriptions.edges
-                      ]
-                    }
+                        ...fetchMoreResult.prescriptions.edges,
+                      ],
+                    },
                   };
-                }
+                },
               })
             }
           >

@@ -92,13 +92,9 @@ const ShowBP = ({ q }) => {
 
   const bloodPressure = !q.bloodPressure.systolic
     ? "No BP given"
-    : `BP: ${q.bloodPressure.systolic || ""}/${
-        q.bloodPressure.diastolic || ""
-      } mmHg`;
+    : `BP: ${q.bloodPressure.systolic || ""}/${q.bloodPressure.diastolic || ""} mmHg`;
 
-  return (
-    <Typography className={classes.bloodPressure}>{bloodPressure}</Typography>
-  );
+  return <Typography className={classes.bloodPressure}>{bloodPressure}</Typography>;
 };
 
 const ShowCondition = (props) => {
@@ -106,12 +102,8 @@ const ShowCondition = (props) => {
   const { condition, name } = props;
 
   return (
-    <Typography
-      color={condition.explain ? "error" : "inherit"}
-      className={classes.condition}
-    >
-      <span className={classes.conditionHeading}>{name}:</span>{" "}
-      {condition.explain || "None"}
+    <Typography color={condition.explain ? "error" : "inherit"} className={classes.condition}>
+      <span className={classes.conditionHeading}>{name}:</span> {condition.explain || "None"}
     </Typography>
   );
 };
@@ -125,27 +117,35 @@ export const PatientInfo = (props) => {
   return (
     <div className={classes.container}>
       <Paper className={classes.patientInfo}>
-        <Typography className={classes.name}>
-          {`${prescription.user.lastName}, ${prescription.user.firstName}`}
-        </Typography>
+        <Typography
+          className={classes.name}
+        >{`${prescription.user.lastName}, ${prescription.user.firstName}`}</Typography>
         <ShowPhoto photoId={prescription.user.photoId} />
         <Typography className={classes.address}>
           {`${prescription.user.addresses[0].city}, ${prescription.user.addresses[0].state} ${prescription.user.addresses[0].zipcode} `}
           <br />
           {prescription.user.addresses[0].telephone}
         </Typography>
-        <Typography className={classes.age}>{`${age} years old`}</Typography>
+        <Typography className={classes.age}>
+          {`${age} years old`}, {prescription.user.gender === "male" ? `Male` : "Female"}
+        </Typography>
         <ShowBP q={prescription.visit.questionnaire} />
         {prescription.visit.questionnaire.allergies && (
-          <ShowCondition
-            condition={prescription.visit.questionnaire.allergies}
-            name="Allergies"
-          />
+          <ShowCondition condition={prescription.visit.questionnaire.allergies} name="Allergies" />
         )}
         {prescription.visit.questionnaire.otherMedicines && (
+          <ShowCondition condition={prescription.visit.questionnaire.otherMedicines} name="Medications" />
+        )}
+        {prescription.visit.questionnaire.medications && (
+          <ShowCondition condition={prescription.visit.questionnaire.medications} name="Diet Medications" />
+        )}
+        {prescription.visit.questionnaire.supplements && (
+          <ShowCondition condition={prescription.visit.questionnaire.supplements} name="Diet Supplements" />
+        )}
+        {prescription.visit.questionnaire.medicationsSupplements && (
           <ShowCondition
-            condition={prescription.visit.questionnaire.otherMedicines}
-            name="Medications"
+            condition={prescription.visit.questionnaire.medicationsSupplements}
+            name="Hair Medications/Supplements"
           />
         )}
       </Paper>

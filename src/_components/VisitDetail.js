@@ -38,9 +38,7 @@ export const VisitDetail = () => {
         <PatientInfo prescription={data.prescription} />
       </div>
       <div className={classes.sectionContainer}>
-        <ShowQuestionnaire
-          questionnaire={data.prescription.visit.questionnaire}
-        />
+        <ShowQuestionnaire questionnaire={data.prescription.visit.questionnaire} user={data.prescription.user} />
       </div>
       <div className={classes.sectionContainer}>
         <PatientMessages prescription={data.prescription} />

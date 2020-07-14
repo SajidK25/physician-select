@@ -34,36 +34,67 @@ export const Heading = ({ heading }) => {
   return <Typography className={classes.heading}>{heading}</Typography>;
 };
 
-export const HeadingWithText = ({ heading, text, isRed = false }) => {
+export const HeadingWithText = ({ heading, text, isRed }) => {
   const classes = useStyles();
 
   return (
     <>
-      <Typography
-        color={isRed ? "error" : "inherit"}
-        className={classes.headingsWithText}
-      >
-        <b>{heading}:</b> {text}
+      <Typography color={isRed ? "error" : "inherit"} className={classes.headingsWithText}>
+        <b>
+          {heading}
+          {text ? `:` : ``}
+        </b>{" "}
+        {text}
       </Typography>
     </>
   );
 };
 
-export const Text = ({ text, isRed = true }) => {
+HeadingWithText.defaultProps = {
+  isRed: false,
+};
+
+export const HeadingWithOptions = ({ heading, value, options, isRed }) => {
+  const option = options.find((c) => c.id.toLowerCase() === value.toLowerCase());
+  if (!option) return null;
+
+  return <HeadingWithText heading={heading} text={option.label} isRed={isRed} />;
+};
+
+HeadingWithOptions.defaultProps = {
+  isRed: false,
+};
+
+export const HeadingWithYesNo = ({ heading, value, isRed }) => {
+  const options = [
+    { id: "yes", label: "Yes" },
+    { id: "no", label: "No" },
+  ];
+
+  return <HeadingWithOptions heading={heading} options={options} value={value} isRed={isRed} />;
+};
+
+HeadingWithYesNo.defaultProps = {
+  isRed: false,
+};
+
+export const Text = (props) => {
+  const { text, isRed } = props;
   const classes = useStyles();
 
   return (
     <>
       {text && (
-        <Typography
-          color={isRed ? "error" : "inherit"}
-          className={classes.text}
-        >
+        <Typography color={isRed ? "error" : "inherit"} className={classes.text}>
           {text}
         </Typography>
       )}
     </>
   );
+};
+
+Text.defaultProps = {
+  isRed: true,
 };
 
 export const Item = ({ text }) => {
@@ -87,30 +118,19 @@ const QueItem = (props) => {
   );
 };
 
-export const CheckBox = (props) => {
-  const { answer, option, text } = props;
-  const classes = useStyles();
-  const color = option === "None" ? "textPrimary" : "error";
+export const CheckBox = ({ answer, option, text, isRed }) => {
+  const shouldBeRed = option !== "None" || isRed === true;
 
-  return (
-    answer && (
-      <>
-        <Typography color={color} className={classes.item}>
-          {option}
-        </Typography>
-        <Text text={text} />
-      </>
-    )
-  );
+  return answer && <HeadingWithText heading={option} text={text} isRed={shouldBeRed} />;
+};
+
+CheckBox.defaultProps = {
+  isRed: false,
 };
 
 export const RadioOption = (props) => {
   const { choices, answer, text } = props;
   const options = [];
-
-  console.log(choices);
-  console.log(answer);
-  console.log(choices.heading);
 
   const choice = choices.options.find((c) => c.id === answer);
   if (!choice) return null;
@@ -133,11 +153,7 @@ export const YesNoRadio = ({ heading, answer, text }) => {
 };
 
 export const AnythingElse = ({ q }) => (
-  <YesNoRadio
-    heading="Anything Else"
-    answer={q.anythingElse.answer}
-    text={q.anythingElse.explain}
-  />
+  <YesNoRadio heading="Anything Else" answer={q.anythingElse.answer} text={q.anythingElse.explain} />
 );
 
 export const UnderConstruction = () => {

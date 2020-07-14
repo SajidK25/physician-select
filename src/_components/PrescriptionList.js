@@ -33,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sortPrescriptions = (a, b) => {
-  console.log("A:", a);
-  console.log("B:", b);
   if (a.status === b.status) return 1;
 
   if (a.status === "ACTIVE") return 1;
@@ -57,7 +55,6 @@ export const PrescriptionList = ({ status }) => {
       if (data) {
         setSorting(true);
         data.pendingPrescriptions.sort(sortPrescriptions);
-        console.log("Sorted:", data.pendingPrescriptions);
         setSorting(false);
       }
       console.log("On completed", data);

@@ -20,7 +20,6 @@ const statusColors = [
 
 export const StatusAvatar = ({ status }) => {
   const classes = useStyles();
-  console.log("Status", status);
 
   const item = statusColors.find((c) => c.status === status);
   const color = item.color;
