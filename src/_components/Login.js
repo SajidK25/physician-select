@@ -60,28 +60,32 @@ export const Login = (props) => {
           initialValues={{ email: "", password: "" }}
           validate={validate}
           onSubmit={async (values, form) => {
-            const response = await login({
-              variables: { ...values },
-              update: (store, { data }) => {
-                if (!data) {
-                  return null;
-                }
+            try {
+              const response = await login({
+                variables: { ...values },
+                update: (store, { data }) => {
+                  if (!data) {
+                    return null;
+                  }
 
-                store.writeQuery({
-                  query: ME_QUERY,
-                  data: {
-                    me: data.login.user,
-                  },
-                });
-              },
-            });
+                  store.writeQuery({
+                    query: ME_QUERY,
+                    data: {
+                      me: data.login.user,
+                    },
+                  });
+                },
+              });
 
-            if (response && response.data) {
-              setAccessToken(response.data.login.accessToken);
+              if (response && response.data) {
+                setAccessToken(response.data.login.accessToken);
+              }
+
+              console.log("Push to /");
+              history.push(from);
+            } catch (err) {
+              console.log("Error", err);
             }
-
-            console.log("Push to /");
-            history.push(from);
           }}
         >
           {({ handleSubmit }) => (
@@ -111,13 +115,7 @@ export const Login = (props) => {
                 autoComplete="password"
                 fullWidth
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
+              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                 Sign In
               </Button>
               <Grid container>

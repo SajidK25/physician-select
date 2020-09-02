@@ -12,23 +12,22 @@ const cache = new InMemoryCache({});
 // const endpoint = prod_endpoint;
 //const endpoint = dev_endpoint;
 
-const endpoint =
-  process.env.NODE_ENV === "development" ? dev_endpoint : prod_endpoint;
+// const endpoint = process.env.NODE_ENV === "development" ? dev_endpoint : prod_endpoint;
 
-console.log("endpoint:", endpoint);
+const endpoint = "https://victory-select-server.herokuapp.com/";
 
 const requestLink = new ApolloLink(
   (operation, forward) =>
-    new Observable(observer => {
+    new Observable((observer) => {
       let handle;
       Promise.resolve(operation)
-        .then(operation => {
+        .then((operation) => {
           const accessToken = getAccessToken();
           if (accessToken) {
             operation.setContext({
               headers: {
-                authorization: `bearer ${accessToken}`
-              }
+                authorization: `bearer ${accessToken}`,
+              },
             });
           }
         })
@@ -36,7 +35,7 @@ const requestLink = new ApolloLink(
           handle = forward(operation).subscribe({
             next: observer.next.bind(observer),
             error: observer.error.bind(observer),
-            complete: observer.complete.bind(observer)
+            complete: observer.complete.bind(observer),
           });
         })
         .catch(observer.error.bind(observer));
@@ -72,28 +71,32 @@ const client = new ApolloClient({
       fetchAccessToken: () => {
         return fetch(`${endpoint}refresh_token`, {
           method: "POST",
-          credentials: "include"
+          credentials: "include",
         });
       },
-      handleFetch: accessToken => {
+      handleFetch: (accessToken) => {
         setAccessToken(accessToken);
       },
-      handleError: err => {
+      handleError: (err) => {
         console.warn("Your refresh token is invalid. Try to relogin");
         console.error(err);
-      }
+      },
     }),
     onError(({ graphQLErrors, networkError }) => {
-      console.log(graphQLErrors);
-      console.log(networkError);
+      if (graphQLErrors)
+        graphQLErrors.map(({ message, locations, path }) =>
+          console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+        );
+
+      if (networkError) console.log(`[Network error]: ${networkError}`);
     }),
     requestLink,
     new HttpLink({
       uri: `${endpoint}graphql`,
-      credentials: "include"
-    })
+      credentials: "include",
+    }),
   ]),
-  cache
+  cache,
 });
 
 // cache.onResetStore(() => cache.writeData({ data }));
