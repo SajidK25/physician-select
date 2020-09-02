@@ -12,9 +12,10 @@ const cache = new InMemoryCache({});
 // const endpoint = prod_endpoint;
 //const endpoint = dev_endpoint;
 
-// const endpoint = process.env.NODE_ENV === "development" ? dev_endpoint : prod_endpoint;
-
+// const endpoint = "http://localhost:4444/";
 const endpoint = "https://victory-select-server.herokuapp.com/";
+
+console.log("endpoint", endpoint);
 
 const requestLink = new ApolloLink(
   (operation, forward) =>

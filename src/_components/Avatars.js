@@ -38,6 +38,8 @@ const typeColors = [
   { type: "ALLERGY", color: "#00c0c0" },
   { type: "JOY", color: "#ffc500" },
   { type: "SLEEP", color: "#00bb00" },
+  { type: "WEIGHT", color: "#7700b2" },
+  { type: "SUPPLEMENT", color: "#00bb00" },
 ];
 
 export const TypeAvatar = ({ type }) => {
