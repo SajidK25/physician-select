@@ -119,6 +119,10 @@ const QueItem = (props) => {
 };
 
 export const CheckBox = ({ answer, option, text, isRed }) => {
+  if (answer === null || answer === undefined) return;
+
+  console.log("Answer", answer);
+  console.log("Option", option);
   const shouldBeRed = option !== "None" || isRed === true;
 
   return answer && <HeadingWithText heading={option} text={text} isRed={shouldBeRed} />;

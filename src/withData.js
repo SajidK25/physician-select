@@ -6,14 +6,9 @@ import { ApolloLink, Observable } from "apollo-link";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
 import { getAccessToken, setAccessToken } from "./accessToken";
-import { prod_endpoint, dev_endpoint } from "./config";
+import { endpoint } from "./config";
 
 const cache = new InMemoryCache({});
-// const endpoint = prod_endpoint;
-//const endpoint = dev_endpoint;
-
-// const endpoint = "http://localhost:4444/";
-const endpoint = "https://victory-select-server.herokuapp.com/";
 
 console.log("endpoint", endpoint);
 

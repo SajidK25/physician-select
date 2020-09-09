@@ -110,22 +110,26 @@ const HowOften = ({ q }) => {
   );
 };
 
-const SocialFactors = ({ q }) => (
-  <>
-    <Heading heading="Social Factors" />
-    <CheckBox answer={q.socialFactors.lgbqt} option="LGBQT" />
-    <CheckBox answer={q.socialFactors.alcohol} option="Alcohol/Drug dependency" />
-    <CheckBox answer={q.socialFactors.relationship} option="End of relationship" />
-    <CheckBox answer={q.socialFactors.financial} option="Financial pressures" />
-    <CheckBox answer={q.socialFactors.job} option="Job change" />
-    <CheckBox answer={q.socialFactors.divorce} option="Divorce" />
-    <CheckBox answer={q.socialFactors.death} option="Death" />
-    <CheckBox answer={q.socialFactors.children} option="Children" />
-    <CheckBox answer={q.socialFactors.postpartum} option="Postpartum" />
-    <CheckBox answer={q.socialFactors.other} option="Other" text={q.socialFactors.otherExplain} />
-    <CheckBox answer={q.socialFactors.none} option="None" />
-  </>
-);
+const SocialFactors = ({ q }) => {
+  console.log("Social Factors", q.socialFactors);
+
+  return (
+    <>
+      <Heading heading="Social Factors" />
+      <CheckBox answer={q.socialFactors.lgbqt} option="LGBQT" />
+      <CheckBox answer={q.socialFactors.alcohol} option="Alcohol/Drug dependency" />
+      <CheckBox answer={q.socialFactors.relationship} option="End of relationship" />
+      <CheckBox answer={q.socialFactors.financial} option="Financial pressures" />
+      <CheckBox answer={q.socialFactors.job} option="Job change" />
+      <CheckBox answer={q.socialFactors.divorce} option="Divorce" />
+      <CheckBox answer={q.socialFactors.death} option="Death" />
+      <CheckBox answer={q.socialFactors.children} option="Children" />
+      <CheckBox answer={q.socialFactors.postpartum} option="Postpartum" />
+      <CheckBox answer={q.socialFactors.other} option="Other" text={q.socialFactors.otherExplain} />
+      {q.socialFactors.none && <CheckBox answer={q.socialFactors.none} option="None" />}
+    </>
+  );
+};
 
 export const JoyQuestionnaire = ({ q }) => {
   const classes = useStyles();
