@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -51,40 +51,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const deliveryTitle = [
-  "Monthly Delivery",
-  "2 Month Delivery",
-  "3 Month Delivey",
-];
+const deliveryTitle = ["Monthly Delivery", "2 Month Delivery", "3 Month Delivey"];
 
 export const TreatmentPlan = ({ prescription }) => {
   const classes = useStyles();
   const history = useHistory();
   const confirm = useConfirm();
+  const [disableButtons, setDisableButtons] = useState(false);
 
-  const [approvePrescription, { error: approveError }] = useMutation(
-    APPROVE_PRESCRIPTION,
-    {
-      onCompleted({ data }) {
-        history.push("/physician");
-      },
-    }
-  );
+  const [approvePrescription, { error: approveError }] = useMutation(APPROVE_PRESCRIPTION, {
+    onCompleted({ data }) {
+      history.push("/physician");
+    },
+  });
 
-  const [denyPrescription, { error: denyError }] = useMutation(
-    DENY_PRESCRIPTION,
-    {
-      onCompleted({ data }) {
-        history.push("/physician");
-      },
-    }
-  );
+  const [denyPrescription, { error: denyError }] = useMutation(DENY_PRESCRIPTION, {
+    onCompleted({ data }) {
+      history.push("/physician");
+    },
+  });
 
   const onDenied = () => {
     confirm({
       description: "Please confirm that you want to decline this request.",
       title: "Decline Prescription Request",
     }).then(async () => {
+      setDisableButtons(true);
       try {
         await denyPrescription({
           variables: { id: prescription.id },
@@ -100,6 +92,7 @@ export const TreatmentPlan = ({ prescription }) => {
       description: "Please confirm that you want to approve this request.",
       title: "Approve Prescription Request",
     }).then(async () => {
+      setDisableButtons(true);
       try {
         await approvePrescription({
           variables: { id: prescription.id },
@@ -116,40 +109,30 @@ export const TreatmentPlan = ({ prescription }) => {
       <ErrorMessage error={approveError} />
       <ErrorMessage error={denyError} />
 
-      <div className={classes.treatmentHeading}>
-        Treatment Preference - Status: {prescription.status}
-      </div>
+      <div className={classes.treatmentHeading}>Treatment Preference - Status: {prescription.status}</div>
       <Divider />
       <div className={classes.treatmentContainer}>
-        <div className={classes.drugDisplay}>
-          {prescription.product.display}
-        </div>
+        <div className={classes.drugDisplay}>{prescription.product.display}</div>
 
-        <div
-          className={classes.drugDoses}
-        >{`${prescription.timesPerMonth}x per month`}</div>
+        <div className={classes.drugDoses}>{`${prescription.timesPerMonth}x per month`}</div>
         {prescription.addon ? (
           <>
-            <div className={classes.drugDisplay}>
-              {prescription.addon.display}
-            </div>
-            <div className={classes.drugDoses}>
-              {`${prescription.addonTimesPerMonth}x per month`}
-            </div>
+            <div className={classes.drugDisplay}>{prescription.addon.display}</div>
+            <div className={classes.drugDoses}>{`${prescription.addonTimesPerMonth}x per month`}</div>
           </>
         ) : null}
 
-        <div className={classes.drugDelivery}>
-          {deliveryTitle[prescription.shippingInterval - 1]}
-        </div>
+        <div className={classes.drugDelivery}>{deliveryTitle[prescription.shippingInterval - 1]}</div>
       </div>
       <Button
         className={classes.button}
         color="primary"
         size="small"
         variant="outlined"
-        onClick={onApproved}
-        disabled={prescription.status === "ACTIVE"}
+        onClick={() => {
+          onApproved();
+        }}
+        disabled={prescription.status === "ACTIVE" || disableButtons}
       >
         Approve
       </Button>
@@ -158,7 +141,10 @@ export const TreatmentPlan = ({ prescription }) => {
         color="secondary"
         size="small"
         variant="outlined"
-        onClick={onDenied}
+        disabled={disableButtons}
+        onClick={() => {
+          onDenied();
+        }}
       >
         Decline
       </Button>
@@ -168,6 +154,7 @@ export const TreatmentPlan = ({ prescription }) => {
         color="primary"
         size="small"
         variant="outlined"
+        disabled={disableButtons}
         onClick={() => history.push("/physician")}
       >
         Cancel
