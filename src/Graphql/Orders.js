@@ -18,6 +18,8 @@ export const ORDERLIST = gql`
       city
       state
       zipcode
+      telephone
+      email
       prescription {
         id
         status

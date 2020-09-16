@@ -82,21 +82,16 @@ export const Prescriptions = ({ status }) => {
       addressTwo: p.addressTwo,
       cityStateZip: `${p.city}, ${p.state} ${p.zipcode}`,
       birthDate: formatDate(p.user.birthDate),
+      telephone: p.telephone,
       product: p.prescription.product.display,
       productQuantity:
-        p.prescription.timesPerMonth *
-        p.prescription.shippingInterval *
-        p.prescription.product.pillsPerDose,
+        p.prescription.timesPerMonth * p.prescription.shippingInterval * p.prescription.product.pillsPerDose,
       productDirections: p.prescription.product.directions,
       addon: p.prescription.addon ? p.prescription.addon.display : "",
       addonQuantity: p.prescription.addon
-        ? p.prescription.addonTimesPerMonth *
-          p.prescription.shippingInterval *
-          p.prescription.addon.pillsPerDose
+        ? p.prescription.addonTimesPerMonth * p.prescription.shippingInterval * p.prescription.addon.pillsPerDose
         : 0,
-      addonDirections: p.prescription.addon
-        ? p.prescription.addon.directions
-        : "",
+      addonDirections: p.prescription.addon ? p.prescription.addon.directions : "",
       approvedDate: formatDate(p.prescription.approvedDate),
       refills: p.prescription.refillsRemaining,
       startDate: formatDate(p.prescription.startDate),
@@ -106,16 +101,9 @@ export const Prescriptions = ({ status }) => {
 
   return (
     <div className={classes.container}>
-      <Dialog
-        fullScreen={false}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
+      <Dialog fullScreen={false} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
         <DialogTitle id="responsive-dialog-title">
-          {status === "PENDING"
-            ? "Process Prescriptions"
-            : "Ship Prescriptions"}
+          {status === "PENDING" ? "Process Prescriptions" : "Ship Prescriptions"}
         </DialogTitle>
         <DialogActions>
           {status === "PENDING" ? (
@@ -131,11 +119,7 @@ export const Prescriptions = ({ status }) => {
         </DialogActions>
       </Dialog>
       <MaterialTable
-        title={
-          status === "PENDING"
-            ? "Prescriptions to be processed"
-            : "Prescriptions to be shipped"
-        }
+        title={status === "PENDING" ? "Prescriptions to be processed" : "Prescriptions to be shipped"}
         icons={tableIcons}
         columns={[
           {
@@ -193,8 +177,7 @@ export const Prescriptions = ({ status }) => {
         }}
         actions={[
           {
-            tooltip:
-              status === "PENDING" ? "Print Prescriptions" : "Ship Packages",
+            tooltip: status === "PENDING" ? "Print Prescriptions" : "Ship Packages",
             icon: () => <Print />,
             onClick: (evt, data) => {
               setPdfData(data);

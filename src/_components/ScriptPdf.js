@@ -2,22 +2,14 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Signature from "../_images/BFsignature.jpg";
-import {
-  Page,
-  Text,
-  View,
-  Image,
-  Document,
-  StyleSheet,
-  PDFDownloadLink
-} from "@react-pdf/renderer";
+import { Page, Text, View, Image, Document, StyleSheet, PDFDownloadLink } from "@react-pdf/renderer";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     textAlign: "center",
     color: theme.palette.primary,
-    textDecoration: "none"
-  }
+    textDecoration: "none",
+  },
 }));
 
 // Create styles
@@ -29,12 +21,12 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     marginTop: 30,
     fontSize: 12,
-    fontWeight: 300
+    fontWeight: 300,
   },
   heading: {
     fontSize: 30,
     marginTop: 40,
-    fontWeight: "extrabold"
+    fontWeight: "extrabold",
   },
   victoryFooter: {
     marginTop: 25,
@@ -45,12 +37,12 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     fontSize: 10,
     color: "gray",
-    fontWeight: "light"
+    fontWeight: "light",
   },
   doctor: {
     fontSize: 11,
     fontWeight: "bold",
-    color: "black"
+    color: "black",
   },
   victory: {
     borderBottomStyle: "solid",
@@ -58,13 +50,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 20,
     textAlign: "center",
-    marginBottom: 0
+    marginBottom: 0,
   },
   row: {
     flexGrow: 1,
     flexDirection: "row",
     alignItems: "flex-end",
-    paddingBottom: 4
+    paddingBottom: 4,
   },
   patientInfo: {
     borderStyle: "solid",
@@ -74,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15,
     paddingTop: 15,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   instructions: {
     borderStyle: "solid",
@@ -84,30 +76,30 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 25,
     paddingTop: 8,
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   patientName: {
     fontSize: 18,
-    fontWeight: 600
+    fontWeight: 600,
   },
   push: {
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
   drug: {
     fontSize: 18,
     fontWeight: 600,
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   centered: {
-    textAlign: "center"
+    textAlign: "center",
   },
   phone: {
     marginTop: 6,
-    fontSize: 9
+    fontSize: 9,
   },
   signatureSection: {
     marginTop: "auto",
-    marginBottom: 40
+    marginBottom: 40,
   },
   signature: {
     borderStyle: "solid",
@@ -115,26 +107,26 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 0,
     paddingTop: 8,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
   image: {
     width: "50%",
-    padding: 0
+    padding: 0,
   },
   centerImage: {
     alignItems: "center",
-    flexGrow: 1
+    flexGrow: 1,
   },
   page: {
     flexDirection: "column",
-    backgroundColor: "#E4E4E4"
-  }
+    backgroundColor: "#E4E4E4",
+  },
 });
 
 const Report = ({ data }) => (
   <Page size="A4">
     <View style={styles.section}>
-      {data.map(d => (
+      {data.map((d) => (
         <Text key={d.id}>
           {d.name} {d.product} {d.addon}
         </Text>
@@ -155,12 +147,20 @@ const PrescriptionFooter = () => (
   </View>
 );
 
+function formatPhoneNumber(phoneNumberString) {
+  var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+  var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    var intlCode = match[1] ? "+1 " : "";
+    return [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
+  }
+  return "";
+}
+
 const PatientSection = ({ data }) => {
-  const address =
-    data.addressOne +
-    (data.addressTwo ? " " + data.address.to : "") +
-    ", " +
-    data.cityStateZip;
+  const address = data.addressOne + (data.addressTwo ? " " + data.addressTwo : "") + ", " + data.cityStateZip;
+  console.log("Patient", data);
+  const phone = formatPhoneNumber(data.telephone);
 
   return (
     <View style={styles.patientInfo}>
@@ -171,6 +171,7 @@ const PatientSection = ({ data }) => {
         <Text style={styles.push}>DoB: {data.birthDate}</Text>
       </View>
       <Text>{address}</Text>
+      <Text>{phone}</Text>
     </View>
   );
 };
@@ -210,7 +211,7 @@ const Prescriptions = ({ data }) => {
 
   return (
     <>
-      {data.map(d => (
+      {data.map((d) => (
         <Page key={d.id} size="A4">
           <PrescriptionFooter />
           <View style={styles.body}>
@@ -257,14 +258,8 @@ export const ScriptPdf = ({ data, handleClick }) => {
 
   return (
     <Button color="primary" onClick={handleClick}>
-      <PDFDownloadLink
-        document={<Script data={data} />}
-        fileName="somename.pdf"
-        className={classes.button}
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Process Prescriptions"
-        }
+      <PDFDownloadLink document={<Script data={data} />} fileName="somename.pdf" className={classes.button}>
+        {({ blob, url, loading, error }) => (loading ? "Loading document..." : "Process Prescriptions")}
       </PDFDownloadLink>
     </Button>
   );
