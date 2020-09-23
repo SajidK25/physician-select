@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import { ShowPhoto, ChangeEd, TreatmentPlan } from "../_components";
+import { formatPhoneNumber } from "../_helpers";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -124,7 +125,7 @@ export const PatientInfo = (props) => {
         <Typography className={classes.address}>
           {`${prescription.user.addresses[0].city}, ${prescription.user.addresses[0].state} ${prescription.user.addresses[0].zipcode} `}
           <br />
-          {prescription.user.addresses[0].telephone}
+          {formatPhoneNumber(prescription.user.addresses[0].telephone)}
         </Typography>
         <Typography className={classes.age}>
           {`${age} years old`}, {prescription.user.gender === "male" ? `Male` : "Female"}
