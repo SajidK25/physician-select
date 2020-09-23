@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import { RenderStdTextField, ErrorMessage } from "./";
+import { RenderStdTextField, ErrorMessage, Spinner } from "./";
 import { setAccessToken } from "../accessToken";
 import { ME_QUERY, LOGIN_MUTATION } from "../Graphql";
 
@@ -88,8 +88,9 @@ export const Login = (props) => {
             }
           }}
         >
-          {({ handleSubmit }) => (
+          {({ handleSubmit, validating, submitting }) => (
             <form onSubmit={handleSubmit}>
+              {(validating || submitting) && <Spinner />}
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
@@ -115,7 +116,14 @@ export const Login = (props) => {
                 autoComplete="password"
                 fullWidth
               />
-              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+              <Button
+                disabled={validating || submitting}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
                 Sign In
               </Button>
               <Grid container>

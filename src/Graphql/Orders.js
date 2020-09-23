@@ -4,6 +4,7 @@ export const ORDERLIST = gql`
   query orderList($status: String) {
     orders(status: $status) {
       id
+      status
       new
       refills
       amount
@@ -30,11 +31,13 @@ export const ORDERLIST = gql`
         expireDate
         refillsRemaining
         product {
+          productName
           display
           directions
           pillsPerDose
         }
         addon {
+          productName
           display
           directions
           pillsPerDose

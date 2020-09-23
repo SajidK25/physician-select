@@ -37,3 +37,4 @@ export * from "./ShowMessage";
 export * from "./TreatmentPlan";
 export * from "./Avatars";
 export * from "./MessageListTile";
+export * from "./Spinner";

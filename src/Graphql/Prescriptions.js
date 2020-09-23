@@ -24,11 +24,13 @@ export const PENDING_PRESCRIPTIONS = gql`
       type
       createdAt
       product {
+        productName
         display
         directions
         pillsPerDose
       }
       addon {
+        productName
         display
         directions
         pillsPerDose
@@ -57,11 +59,13 @@ export const VISITLIST_QUERY = gql`
           type
           createdAt
           product {
+            productName
             display
             directions
             pillsPerDose
           }
           addon {
+            productName
             display
             directions
             pillsPerDose
@@ -115,12 +119,14 @@ export const PHARMACYLIST_QUERY = gql`
             expireDate
             refillsRemaining
             product {
+              productName
               display
               directions
               pillsPerDose
             }
             addon {
               display
+              productName
               directions
               pillsPerDose
             }

@@ -75,7 +75,10 @@ export const Prescriptions = ({ status }) => {
     tableData = data.orders.map((p) => ({
       id: p.id,
       status: p.status,
-      name: `${p.user.lastName}, ${p.user.firstName}`,
+      name:
+        p.status === "PAYMENT_DECLINED"
+          ? `<<< ${p.user.lastName}, ${p.user.firstName} >>>`
+          : `${p.user.lastName}, ${p.user.firstName}`,
       lastName: p.user.lastName,
       firstName: p.user.firstName,
       addressOne: p.addressOne,
@@ -83,7 +86,8 @@ export const Prescriptions = ({ status }) => {
       cityStateZip: `${p.city}, ${p.state} ${p.zipcode}`,
       birthDate: formatDate(p.user.birthDate),
       telephone: p.telephone,
-      product: p.prescription.product.display,
+      product:
+        p.prescription.type === "SUPPLEMENT" ? p.prescription.product.productName : p.prescription.product.display,
       productQuantity:
         p.prescription.timesPerMonth * p.prescription.shippingInterval * p.prescription.product.pillsPerDose,
       productDirections: p.prescription.product.directions,
