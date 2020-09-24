@@ -119,10 +119,8 @@ const QueItem = (props) => {
 };
 
 export const CheckBox = ({ answer, option, text, isRed }) => {
-  if (answer === null || answer === undefined) return;
+  if (!answer) return null;
 
-  console.log("Answer", answer);
-  console.log("Option", option);
   const shouldBeRed = option !== "None" || isRed === true;
 
   return answer && <HeadingWithText heading={option} text={text} isRed={shouldBeRed} />;
@@ -152,6 +150,7 @@ export const YesNoRadio = ({ heading, answer, text }) => {
     ],
   };
   const test = answer.toLowerCase();
+  if (test === "no") text = "";
 
   return <RadioOption choices={choices} answer={test} text={text} />;
 };

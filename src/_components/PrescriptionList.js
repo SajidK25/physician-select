@@ -57,7 +57,6 @@ export const PrescriptionList = ({ status }) => {
         data.pendingPrescriptions.sort(sortPrescriptions);
         setSorting(false);
       }
-      console.log("On completed", data);
     },
   });
   const classes = useStyles();
@@ -76,14 +75,7 @@ export const PrescriptionList = ({ status }) => {
   return (
     <div className={classes.container}>
       {data.pendingPrescriptions.map(
-        (p) =>
-          p.type !== "SUPPLEMENT" && (
-            <PrescriptionListTile
-              key={p.id}
-              prescription={p}
-              onClick={handleClick}
-            />
-          )
+        (p) => p.type !== "SUPPLEMENT" && <PrescriptionListTile key={p.id} prescription={p} onClick={handleClick} />
       )}
     </div>
   );

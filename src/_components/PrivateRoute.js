@@ -7,7 +7,6 @@ export const PrivateRoute = ({ children, ...rest }) => {
   const { data } = useQuery(ME_QUERY);
 
   const me = data ? data.me : null;
-  console.log("ME:", me);
 
   return (
     <Route
@@ -19,7 +18,7 @@ export const PrivateRoute = ({ children, ...rest }) => {
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: location }
+              state: { from: location },
             }}
           />
         )

@@ -1,9 +1,7 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import moment from "moment";
 import { CheckBox, AnythingElse, Heading, HeadingWithText, HeadingWithOptions, HeadingWithYesNo, YesNoRadio } from "./";
-import { TreatmentPlan } from "../TreatmentPlan";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -290,12 +288,3 @@ export const HairQuestionnaire = ({ q, user }) => {
     </Paper>
   );
 };
-
-/*
-
-  labWork: {
-    answer: "",
-    fileName: ""
-  },
-
- */
