@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout, Login, PrivateRoute } from "../_components";
-import { VisitDetail, Pharmacy, Physician } from "../_components";
+import { VisitDetail, Pharmacy, Physician, Admin } from "../_components";
 import { Home } from "./";
 
-export const Main = props => {
+export const Main = (props) => {
   return (
     <Layout>
       <Switch>
@@ -13,6 +13,9 @@ export const Main = props => {
         </Route>
         <PrivateRoute path="/pharmacy">
           <Pharmacy />
+        </PrivateRoute>
+        <PrivateRoute path="/admin">
+          <Admin />
         </PrivateRoute>
         <PrivateRoute path="/physician">
           <Physician />

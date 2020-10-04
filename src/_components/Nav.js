@@ -58,11 +58,7 @@ const MenuItem = ({ to, label }) => {
   const classes = useStyles();
   return (
     <li className={classes.item}>
-      <NavLink
-        to={to}
-        className={classes.link}
-        activeClassName={classes.active}
-      >
+      <NavLink to={to} className={classes.link} activeClassName={classes.active}>
         {label}
       </NavLink>
     </li>
@@ -89,6 +85,7 @@ export const Nav = () => {
       <ul className={classes.list}>
         <MenuItem to="/pharmacy" label="Pharmacy" />
         <MenuItem to="/physician" label="Physician" />
+        <MenuItem to="/admin" label="Admin" />
         {me && <LogoutItem />}
       </ul>
     </div>

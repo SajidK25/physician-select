@@ -16,6 +16,14 @@ export const DENY_PRESCRIPTION = gql`
   }
 `;
 
+export const SETNEXTDELIVERYDATE = gql`
+  mutation setNextDeliveryDate {
+    setNextDeliveryDate {
+      message
+    }
+  }
+`;
+
 export const PENDING_PRESCRIPTIONS = gql`
   query {
     pendingPrescriptions {
