@@ -24,6 +24,12 @@ export const SETNEXTDELIVERYDATE = gql`
   }
 `;
 
+export const SENDREMINDERS = gql`
+  mutation sendReminders {
+    sendReminders
+  }
+`;
+
 export const PENDING_PRESCRIPTIONS = gql`
   query {
     pendingPrescriptions {

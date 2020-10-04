@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import { useConfirm } from "../Confirmation";
 import { ErrorMessage } from "../_components";
-import { SETNEXTDELIVERYDATE } from "../Graphql";
+import { SETNEXTDELIVERYDATE, SENDREMINDERS } from "../Graphql";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +56,8 @@ export const Admin = () => {
 
   const [setNextDeliveryDate, { error: setNextError }] = useMutation(SETNEXTDELIVERYDATE);
 
+  const [sendReminders, { error: sendRemindersError }] = useMutation(SENDREMINDERS);
+
   const setNextDelivery = () => {
     confirm({
       description: "Please confirm that you want to run the utility to set the next delivery dates.",
@@ -70,9 +72,25 @@ export const Admin = () => {
     });
   };
 
+  const sendOutReminders = () => {
+    confirm({
+      description: "Please confirm that you want to run the utility to send out reminders.",
+      title: "Send out refill reminders",
+    }).then(async () => {
+      try {
+        const ret = await sendReminders();
+        console.log("return", ret);
+        alert("Finished");
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  };
+
   return (
     <div className={classes.paper}>
       <ErrorMessage error={setNextError} />
+      <ErrorMessage error={sendRemindersError} />
       Admin
       <div
         className={classes.button}
@@ -82,7 +100,14 @@ export const Admin = () => {
       >
         Update Next Delivery Dates
       </div>
-      <div className={classes.button}>Send out Delivery Reminders</div>
+      <div
+        className={classes.button}
+        onClick={() => {
+          sendOutReminders();
+        }}
+      >
+        Send out Delivery Reminders
+      </div>
       <div className={classes.button}>Process Refills</div>
     </div>
   );
