@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Signature from "../_images/BFsignature.jpg";
 import { Page, Text, View, Image, Document, StyleSheet, PDFDownloadLink } from "@react-pdf/renderer";
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -147,20 +148,9 @@ const PrescriptionFooter = () => (
   </View>
 );
 
-function formatPhoneNumber(phoneNumberString) {
-  var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-  var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    var intlCode = match[1] ? "+1 " : "";
-    return [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
-  }
-  return "";
-}
-
 const PatientSection = ({ data }) => {
   const address = data.addressOne + (data.addressTwo ? " " + data.addressTwo : "") + ", " + data.cityStateZip;
   console.log("Patient", data);
-  const phone = formatPhoneNumber(data.telephone);
 
   return (
     <View style={styles.patientInfo}>
@@ -171,7 +161,7 @@ const PatientSection = ({ data }) => {
         <Text style={styles.push}>DoB: {data.birthDate}</Text>
       </View>
       <Text>{address}</Text>
-      <Text>{phone}</Text>
+      <Text>{data.telephone}</Text>
     </View>
   );
 };
@@ -193,11 +183,11 @@ const DrugInfo = ({ data, product, quantity, refills, directions }) => {
       <Text style={styles.drug}>{product}</Text>
       <View style={styles.row}>
         <Text>{`Quantity: ${quantity}`}</Text>
-        <Text style={styles.push}>Date Rx Written: {data.startDate}</Text>
+        {data.startDate && <Text style={styles.push}>{`Date Rx Written: ${data.startDate}`}</Text>}
       </View>
       <View style={styles.row}>
-        <Text>{`Refills: ${refills}`}</Text>
-        <Text style={styles.push}>Expires on: {data.expireDate}</Text>
+        {refills !== 999 && <Text>{`Refills: ${refills}`}</Text>}
+        {data.expireDate && <Text style={styles.push}>{`Expires on: ${data.expireDate}`}</Text>}
       </View>
       <View style={styles.instructions}>
         <Text>{directions}</Text>
@@ -212,33 +202,37 @@ const Prescriptions = ({ data }) => {
   return (
     <>
       {data.map((d) => (
-        <Page key={d.id} size="A4">
-          <PrescriptionFooter />
-          <View style={styles.body}>
-            <Text style={styles.heading}>Prescription</Text>
-            <Text>{d.approvedDate}</Text>
+        <Fragment key={d.id}>
+          {d.status === "PENDING" && (
+            <Page size="A4">
+              <PrescriptionFooter />
+              <View style={styles.body}>
+                <Text style={styles.heading}>Prescription</Text>
+                <Text>{d.approvedDate}</Text>
 
-            <PatientSection data={d} />
+                <PatientSection data={d} />
 
-            <DrugInfo
-              data={d}
-              product={d.product}
-              refills={d.refills}
-              quantity={d.productQuantity}
-              directions={d.productDirections}
-            />
+                <DrugInfo
+                  data={d}
+                  product={d.product}
+                  refills={d.refills}
+                  quantity={d.productQuantity}
+                  directions={d.productDirections}
+                />
 
-            <DrugInfo
-              data={d}
-              product={d.addon}
-              refills={d.refills}
-              quantity={d.addonQuantity}
-              directions={d.addonDirections}
-            />
+                <DrugInfo
+                  data={d}
+                  product={d.addon}
+                  refills={d.refills}
+                  quantity={d.addonQuantity}
+                  directions={d.addonDirections}
+                />
 
-            <SignatureSection />
-          </View>
-        </Page>
+                <SignatureSection />
+              </View>
+            </Page>
+          )}
+        </Fragment>
       ))}
     </>
   );
@@ -258,7 +252,11 @@ export const ScriptPdf = ({ data, handleClick }) => {
 
   return (
     <Button color="primary" onClick={handleClick}>
-      <PDFDownloadLink document={<Script data={data} />} fileName="somename.pdf" className={classes.button}>
+      <PDFDownloadLink
+        document={<Script data={data} />}
+        fileName={`rx-${format(new Date(), "yyyy-MM-dd")}.pdf`}
+        className={classes.button}
+      >
         {({ blob, url, loading, error }) => (loading ? "Loading document..." : "Process Prescriptions")}
       </PDFDownloadLink>
     </Button>

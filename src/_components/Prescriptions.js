@@ -7,7 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from "material-table";
-import { formatDate } from "../_helpers";
+import { formatDate, formatPhoneNumber } from "../_helpers";
 import Print from "@material-ui/icons/Print";
 import { ErrorMessage, ScriptPdf, Loading } from "./";
 import { tableIcons } from "./";
@@ -25,8 +25,32 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginLeft: "auto",
     marginRight: "auto",
+    fontSize: 13,
+  },
+  detailContainer: {
+    padding: "5px 30px",
+    fontSize: 13,
+    lineHeight: "15px",
+    fontWeight: 400,
+  },
+  address: {
+    marginLeft: 67,
   },
 }));
+
+const ShowDetail = ({ data }) => {
+  const classes = useStyles();
+  return (
+    <div className={classes.detailContainer}>
+      <div>{data.addressOne}</div>
+      {data.addressTwo && <div>{data.addressTwo}</div>}
+      <div>{data.cityStateZip}</div>
+      <div>{data.telephone}</div>
+      <br />
+      <div>{data.birthDate}</div>
+    </div>
+  );
+};
 
 export const Prescriptions = ({ status }) => {
   const [open, setOpen] = React.useState(false);
@@ -85,7 +109,7 @@ export const Prescriptions = ({ status }) => {
       addressTwo: p.addressTwo,
       cityStateZip: `${p.city}, ${p.state} ${p.zipcode}`,
       birthDate: formatDate(p.user.birthDate),
-      telephone: p.telephone,
+      telephone: formatPhoneNumber(p.telephone),
       product:
         p.prescription.type === "SUPPLEMENT" ? p.prescription.product.productName : p.prescription.product.display,
       productQuantity:
@@ -161,24 +185,35 @@ export const Prescriptions = ({ status }) => {
         ]}
         data={tableData}
         options={{
-          actionsCellStyle: {
-            width: 50,
-            backgroundColor: "white",
-          },
+          //     actionsCellStyle: {
+          //       width: 50,
+          //       backgroundColor: "white",
+          //     },
+          actionsColumnIndex: 2,
           selection: true,
-          selectionColumnProps: { style: { width: 75 } },
+          //     selectionColumnProps: { style: { width: 75 } },
           search: false,
           padding: "dense",
+          paging: false,
+          maxBodyHeight: "calc(100vh - 200px)",
           draggable: false,
           showTextRowsSelected: false,
-          tableLayout: "fixed",
-          headerStyle: {
-            backgroundColor: "#039be5",
-            borderRightStyle: "solid",
-            borderRightWidth: 1,
-            color: "white",
-          },
+          //          tableLayout: "fixed",
+          //          headerStyle: {
+          //            backgroundColor: "#039be5",
+          //            borderRightStyle: "solid",
+          //            borderRightWidth: 1,
+          //            color: "white",
+          //          },
         }}
+        detailPanel={[
+          {
+            tooltip: "Show Patient Info",
+            render: (rowData) => {
+              return <ShowDetail data={rowData} />;
+            },
+          },
+        ]}
         actions={[
           {
             tooltip: status === "PENDING" ? "Print Prescriptions" : "Ship Packages",

@@ -132,7 +132,7 @@ export const TreatmentPlan = ({ prescription }) => {
         onClick={() => {
           onApproved();
         }}
-        disabled={prescription.status === "ACTIVE" || disableButtons}
+        disabled={prescription.status !== "PENDING" || disableButtons}
       >
         Approve
       </Button>
@@ -141,7 +141,7 @@ export const TreatmentPlan = ({ prescription }) => {
         color="secondary"
         size="small"
         variant="outlined"
-        disabled={disableButtons}
+        disabled={prescription.status !== "PENDING" || disableButtons}
         onClick={() => {
           onDenied();
         }}
@@ -157,7 +157,7 @@ export const TreatmentPlan = ({ prescription }) => {
         disabled={disableButtons}
         onClick={() => history.push("/physician")}
       >
-        Cancel
+        Close
       </Button>
     </Paper>
   );
