@@ -202,37 +202,33 @@ const Prescriptions = ({ data }) => {
   return (
     <>
       {data.map((d) => (
-        <Fragment key={d.id}>
-          {d.status === "PENDING" && (
-            <Page size="A4">
-              <PrescriptionFooter />
-              <View style={styles.body}>
-                <Text style={styles.heading}>Prescription</Text>
-                <Text>{d.approvedDate}</Text>
+        <Page size="A4">
+          <PrescriptionFooter />
+          <View style={styles.body}>
+            <Text style={styles.heading}>Prescription</Text>
+            <Text>{d.approvedDate}</Text>
 
-                <PatientSection data={d} />
+            <PatientSection data={d} />
 
-                <DrugInfo
-                  data={d}
-                  product={d.product}
-                  refills={d.refills}
-                  quantity={d.productQuantity}
-                  directions={d.productDirections}
-                />
+            <DrugInfo
+              data={d}
+              product={d.product}
+              refills={d.refills}
+              quantity={d.productQuantity}
+              directions={d.productDirections}
+            />
 
-                <DrugInfo
-                  data={d}
-                  product={d.addon}
-                  refills={d.refills}
-                  quantity={d.addonQuantity}
-                  directions={d.addonDirections}
-                />
+            <DrugInfo
+              data={d}
+              product={d.addon}
+              refills={d.refills}
+              quantity={d.addonQuantity}
+              directions={d.addonDirections}
+            />
 
-                <SignatureSection />
-              </View>
-            </Page>
-          )}
-        </Fragment>
+            <SignatureSection />
+          </View>
+        </Page>
       ))}
     </>
   );
