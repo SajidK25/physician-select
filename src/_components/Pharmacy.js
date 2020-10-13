@@ -44,6 +44,7 @@ export const Pharmacy = () => {
         >
           <Tab label="To Be Processed" {...a11yProps(0)} />
           <Tab label="In Process" {...a11yProps(1)} />
+          <Tab label="Shipped" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
 
@@ -52,6 +53,9 @@ export const Pharmacy = () => {
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
         <Prescriptions status="PROCESSING" />
+      </TabPanel>
+      <TabPanel value={value} index={2} dir={theme.direction}>
+        <Prescriptions status="SHIPPED" />
       </TabPanel>
     </div>
   );

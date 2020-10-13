@@ -95,6 +95,7 @@ export const Prescriptions = ({ status }) => {
   console.log("Data:", data);
 
   let tableData = [];
+  let columns = [];
   if (data.orders) {
     tableData = data.orders.map((p) => ({
       id: p.id,
@@ -124,7 +125,41 @@ export const Prescriptions = ({ status }) => {
       refills: p.prescription.refillsRemaining,
       startDate: formatDate(p.prescription.startDate),
       expireDate: formatDate(p.prescription.expireDate),
+      shippedDate: formatDate(p.shipDate),
+      trackingNumber: p.trackingNumber,
     }));
+    columns.push({ title: "Name", field: "name" });
+    columns.push({ title: "Product", field: "product" });
+    if (status !== "SHIPPED") {
+      columns.push({
+        title: "Qty",
+        field: "productQuantity",
+        type: "numeric",
+        width: 60,
+        sorting: false,
+      });
+      columns.push({ title: "Addon", field: "addon" });
+      columns.push({ title: "Qty", field: "addonQuantity", type: "numeric", sorting: false, width: 60 });
+    } else {
+      columns.push({
+        title: "Approved",
+        field: "approvedDate",
+        type: "date",
+        width: 120,
+      });
+      columns.push({ title: "Shipped", field: "shippedDate", type: "date", width: 120 });
+      columns.push({
+        title: "Tracking No",
+        field: "trackingNumber",
+        render: (rowData) => (
+          <a
+            href={`https://tools.usps.com/go/TrackConfirmAction?tRef=fullpage&tLc=2&text28777=&tLabels=${rowData.trackingNumber}%2C&tABt=false`}
+          >
+            {rowData.trackingNumber}
+          </a>
+        ),
+      });
+    }
   }
 
   return (
@@ -149,40 +184,7 @@ export const Prescriptions = ({ status }) => {
       <MaterialTable
         title={status === "PENDING" ? "Prescriptions to be processed" : "Prescriptions to be shipped"}
         icons={tableIcons}
-        columns={[
-          {
-            title: "Name",
-            field: "name",
-          },
-          {
-            title: "Product",
-            field: "product",
-          },
-          {
-            title: "Qty",
-            field: "productQuantity",
-            type: "numeric",
-            width: 60,
-            sorting: false,
-          },
-          {
-            title: "Addon",
-            field: "addon",
-          },
-          {
-            title: "Qty",
-            field: "addonQuantity",
-            type: "numeric",
-            sorting: false,
-            width: 60,
-          },
-          {
-            title: "Approved",
-            field: "approvedDate",
-            type: "date",
-            width: 120,
-          },
-        ]}
+        columns={columns}
         data={tableData}
         options={{
           //     actionsCellStyle: {

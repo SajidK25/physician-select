@@ -9,6 +9,8 @@ export const ORDERLIST = gql`
       refills
       amount
       createdAt
+      shipDate
+      trackingNumber
       user {
         firstName
         lastName
