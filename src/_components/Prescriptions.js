@@ -154,6 +154,8 @@ export const Prescriptions = ({ status }) => {
         render: (rowData) => (
           <a
             href={`https://tools.usps.com/go/TrackConfirmAction?tRef=fullpage&tLc=2&text28777=&tLabels=${rowData.trackingNumber}%2C&tABt=false`}
+            target="_blank"
+            rel="noreferrer"
           >
             {rowData.trackingNumber}
           </a>
