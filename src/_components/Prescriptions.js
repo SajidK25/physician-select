@@ -184,7 +184,13 @@ export const Prescriptions = ({ status }) => {
         </DialogActions>
       </Dialog>
       <MaterialTable
-        title={status === "PENDING" ? "Prescriptions to be processed" : "Prescriptions to be shipped"}
+        title={
+          status === "PENDING"
+            ? "Orders to be processed"
+            : status === "SHIPPED"
+            ? "Shipped Orders"
+            : "Orders to be shipped"
+        }
         icons={tableIcons}
         columns={columns}
         data={tableData}
