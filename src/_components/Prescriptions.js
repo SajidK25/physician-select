@@ -92,8 +92,6 @@ export const Prescriptions = ({ status }) => {
   if (!data) return <p>No new visits</p>;
   if (processError) return <ErrorMessage error={processError} />;
 
-  console.log("Data:", data);
-
   let tableData = [];
   let columns = [];
   if (data.orders) {
@@ -205,6 +203,7 @@ export const Prescriptions = ({ status }) => {
           search: false,
           padding: "dense",
           paging: false,
+          filtering: false,
           maxBodyHeight: "calc(100vh - 200px)",
           draggable: false,
           showTextRowsSelected: false,

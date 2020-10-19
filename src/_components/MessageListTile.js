@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
-import { TypeAvatar, StatusAvatar } from "./";
-import moment from "moment";
+import { TypeAvatar } from "./";
+import { formatDistance } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,17 +34,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatarItem: {
-    flexBasis: "50%",
-    [theme.breakpoints.down("sm")]: {
-      flexBasis: "100%",
-    },
+    flexBasis: 35,
+    alignItems: "center",
   },
   nameItem: {
-    flexBasis: "calc(40% - 58px)",
+    flexBasis: "calc(25% - 58px)",
+    textAlign: "left",
     lineHeight: "17px",
     fontWeight: 500,
     [theme.breakpoints.down("sm")]: {
-      flexBasis: "calc(45% - 30px)",
+      flexBasis: "calc(35% - 30px)",
     },
   },
   dateItem: {
@@ -52,20 +51,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     fontSize: 16,
     flexBasis: 125,
-  },
-  productContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexBasis: "calc(66% - 58px)",
     [theme.breakpoints.down("sm")]: {
-      flexBasis: "calc(40% - 30px)",
-      flexDirection: "column",
+      fontSize: 12,
     },
   },
-  productItem: {
-    flexBasis: "50%",
+  textItem: {
+    paddingLeft: 8,
+    paddingRight: 8,
+    flexBasis: "60%",
+    lineHeight: "17px",
+    textAlign: "left",
     [theme.breakpoints.down("sm")]: {
-      flexBasis: "100%",
+      flexBasis: "calc(45% - 30px)",
     },
   },
 }));
@@ -82,20 +79,14 @@ export const MessageListTile = (props) => {
       }}
     >
       <div className={classes.mainContainer}>
-        <div className={classes.iconContainer}>
-          <div className={classes.avatarItem}>
-            <TypeAvatar type={message.prescription.type} />
-          </div>
+        <div className={classes.avatarItem}>
+          <TypeAvatar type={message.prescription.type} />
         </div>
-        <div className={classes.nameItem}>
-          {`${message.user.lastName}, ${message.user.firstName}`}
-        </div>
-        <div className={classes.textContainer}>
-          <div className={classes.productItem}>{message.text}</div>
-        </div>
-        <div className={classes.dateItem}>
-          <Typography>{moment(message.createdAt).fromNow()}</Typography>
-        </div>
+        <div className={classes.nameItem}>{`${message.user.lastName}, ${message.user.firstName}`}</div>
+        <div className={classes.textItem}>{message.text}</div>
+        <Typography className={classes.dateItem}>
+          {formatDistance(new Date(message.createdAt), new Date(), { addSuffix: true })}
+        </Typography>
       </div>
     </Paper>
   );

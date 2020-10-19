@@ -81,7 +81,6 @@ export const Login = (props) => {
                 setAccessToken(response.data.login.accessToken);
               }
 
-              console.log("Push to /");
               history.push(from);
             } catch (err) {
               console.log("Error", err);

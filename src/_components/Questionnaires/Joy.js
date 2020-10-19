@@ -111,8 +111,6 @@ const HowOften = ({ q }) => {
 };
 
 const SocialFactors = ({ q }) => {
-  console.log("Social Factors", q.socialFactors);
-
   return (
     <>
       <Heading heading="Social Factors" />
@@ -133,7 +131,6 @@ const SocialFactors = ({ q }) => {
 
 export const JoyQuestionnaire = ({ q }) => {
   const classes = useStyles();
-  console.log("Joy Q", q);
 
   return (
     <Paper className={classes.container}>

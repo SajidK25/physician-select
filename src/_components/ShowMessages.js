@@ -49,8 +49,6 @@ export const ShowMessages = ({ prescriptionId }) => {
   if (sorting) return <p>Sorting Results</p>;
   if (!data) return <p>No new visits</p>;
 
-  console.log("Data:", data);
-
   return (
     <div className={classes.container}>
       {data.getMessagesByPrescription.map((m) => (

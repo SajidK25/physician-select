@@ -217,8 +217,6 @@ const SixMonthsPrior = ({ q }) => {
 const LabWork = ({ q }) => {
   const classes = useStyles();
 
-  console.log("LabWork:", q.labWork);
-
   if (q.labWork.answer !== "yes" || !q.labWork.fileName) return null;
 
   return (
@@ -264,7 +262,6 @@ const Hairloss = ({ q }) => {
 
 export const HairQuestionnaire = ({ q, user }) => {
   const classes = useStyles();
-  console.log("User", user);
 
   return (
     <Paper className={classes.container}>

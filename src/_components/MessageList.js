@@ -18,15 +18,13 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     width: "100%",
     height: "100%",
-    maxWidth: 760,
+    maxWidth: 1080,
     marginLeft: "auto",
     marginRight: "auto",
   },
 }));
 
 const sortPrescriptions = (a, b) => {
-  console.log("A:", a);
-  console.log("B:", b);
   if (a.status === b.status) return 1;
 
   if (a.status === "ACTIVE") return 1;
@@ -60,8 +58,6 @@ export const MessageList = () => {
   if (error) return <ErrorMessage error={error} />;
   if (sorting) return <p>Sorting Results</p>;
   if (!data) return <p>No new visits</p>;
-
-  console.log("Data:", data);
 
   return (
     <div className={classes.container}>

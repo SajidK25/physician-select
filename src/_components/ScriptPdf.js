@@ -150,7 +150,6 @@ const PrescriptionFooter = () => (
 
 const PatientSection = ({ data }) => {
   const address = data.addressOne + (data.addressTwo ? " " + data.addressTwo : "") + ", " + data.cityStateZip;
-  console.log("Patient", data);
 
   return (
     <View style={styles.patientInfo}>
@@ -197,8 +196,6 @@ const DrugInfo = ({ data, product, quantity, refills, directions }) => {
 };
 
 const Prescriptions = ({ data }) => {
-  console.log("PDF data", data);
-
   return (
     <>
       {data.map((d) => (

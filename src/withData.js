@@ -10,8 +10,6 @@ import { endpoint } from "./config";
 
 const cache = new InMemoryCache({});
 
-console.log("endpoint", endpoint);
-
 const requestLink = new ApolloLink(
   (operation, forward) =>
     new Observable((observer) => {

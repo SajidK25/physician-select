@@ -5,7 +5,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { indigo, green, yellow, red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/styles";
-import moment from "moment";
+import { differenceInMinutes, formatDistance } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,14 +29,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     flexBasis: 58,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       flexBasis: 30,
       flexDirection: "column",
     },
   },
   avatarItem: {
     flexBasis: "50%",
-    [theme.breakpoints.down("sm")]: {
+    paddingRight: 5,
+    [theme.breakpoints.down("xs")]: {
       flexBasis: "100%",
     },
   },
@@ -44,28 +45,30 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: "calc(40% - 58px)",
     lineHeight: "17px",
     fontWeight: 500,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       flexBasis: "calc(45% - 30px)",
     },
   },
   dateItem: {
     marginLeft: "auto",
     fontWeight: 400,
-    fontSize: 16,
+    fontSize: 14,
     flexBasis: 125,
   },
   productContainer: {
     display: "flex",
     flexDirection: "row",
+    paddingRight: 8,
+    paddingLeft: 8,
     flexBasis: "calc(66% - 58px)",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       flexBasis: "calc(40% - 30px)",
       flexDirection: "column",
     },
   },
   productItem: {
     flexBasis: "50%",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       flexBasis: "100%",
     },
   },
@@ -159,7 +162,10 @@ export const PrescriptionListTile = (props) => {
   const { prescription } = props;
   const history = useHistory();
   const classes = useStyles();
-  const timeDeadline = moment().diff(moment(prescription.createdAt).add(1440, "minutes"), "minutes");
+  const diff = differenceInMinutes(new Date(), new Date(prescription.createdAt));
+
+  var timeDeadline = prescription.status === "PENDING" && diff > 240;
+
   return (
     <Paper
       className={classes.paper}
@@ -181,9 +187,9 @@ export const PrescriptionListTile = (props) => {
           <div className={classes.productItem}>{prescription.product.display}</div>
           <div className={classes.productItem}>{prescription.addon ? prescription.addon.display : ""}</div>
         </div>
-        <div className={classes.dateItem}>
-          <Typography color={timeDeadline > 0 ? "error" : "textPrimary"}>{moment(prescription.createdAt).fromNow()}</Typography>
-        </div>
+        <Typography className={classes.dateItem} color={timeDeadline ? "error" : "textPrimary"}>
+          {formatDistance(new Date(prescription.createdAt), new Date(), { addSuffix: true })}
+        </Typography>
       </div>
     </Paper>
   );
