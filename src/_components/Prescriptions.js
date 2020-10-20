@@ -36,18 +36,40 @@ const useStyles = makeStyles((theme) => ({
   address: {
     marginLeft: 67,
   },
+  button: {
+    margin: "4px 8px",
+  },
 }));
 
-const ShowDetail = ({ data }) => {
+const ShowDetail = ({ data, status }) => {
   const classes = useStyles();
   return (
-    <div className={classes.detailContainer}>
-      <div>{data.addressOne}</div>
-      {data.addressTwo && <div>{data.addressTwo}</div>}
-      <div>{data.cityStateZip}</div>
-      <div>{data.telephone}</div>
-      <br />
-      <div>{data.birthDate}</div>
+    <div>
+      <div className={classes.detailContainer}>
+        <div>{data.addressOne}</div>
+        {data.addressTwo && <div>{data.addressTwo}</div>}
+        <div>{data.cityStateZip}</div>
+        <div>{data.telephone}</div>
+        <br />
+        <div>{data.birthDate}</div>
+      </div>
+      {/* status === "SHIPPED" && (
+        <div>
+          <div>
+            <Button className={classes.button} size="small" variant="outlined" color="primary">
+              Set Next Date To Today
+            </Button>
+            <Button className={classes.button} size="small" variant="outlined" color="primary">
+              Turn Off Auto Shipments
+            </Button>
+          </div>
+          <div>
+            <Button className={classes.button} size="small" variant="outlined" color="primary">
+              Set Next Delivery Date
+            </Button>
+          </div>
+        </div>
+      ) */}
     </div>
   );
 };
@@ -126,7 +148,10 @@ export const Prescriptions = ({ status }) => {
       startDate: formatDate(p.prescription.startDate),
       expireDate: formatDate(p.prescription.expireDate),
       shippedDate: formatDate(p.shipDate),
-      nextDelivery: formatDate(p.prescription.nextDelivery),
+      nextDelivery:
+        p.prescription.nextDelivery === p.prescription.expireDate
+          ? "auto-ship off"
+          : formatDate(p.prescription.nextDelivery),
       trackingNumber: p.trackingNumber,
     }));
     columns.push({ title: "Name", field: "name" });
@@ -223,7 +248,7 @@ export const Prescriptions = ({ status }) => {
           {
             tooltip: "Show Patient Info",
             render: (rowData) => {
-              return <ShowDetail data={rowData} />;
+              return <ShowDetail data={rowData} status={status} />;
             },
           },
         ]}
