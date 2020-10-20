@@ -1,9 +1,10 @@
-import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import { useConfirm } from "../Confirmation";
 import { ErrorMessage } from "../_components";
-import { SETNEXTDELIVERYDATE, SENDREMINDERS } from "../Graphql";
+import Button from "@material-ui/core/Button";
+import { SETNEXTDELIVERYDATE, SENDREMINDERS, REMINDERS_TO_GO, PROCESS_REFILLS, REFILLS_TO_PROCESS } from "../Graphql";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     cursor: "pointer",
     marginTop: 12,
-    maxWidth: 250,
+    maxWidth: 280,
     textAlign: "center",
   },
 
@@ -53,10 +54,18 @@ const useStyles = makeStyles((theme) => ({
 export const Admin = () => {
   const classes = useStyles();
   const confirm = useConfirm();
+  const [disabled, setDisabled] = useState(false);
+
+  const { data, error: remindersToGoError, loading: loadingReminders, refetch } = useQuery(REMINDERS_TO_GO);
+  const { data: refills, error: refillsToProcessError, loading: loadingRefills, refetch: refetchRefills } = useQuery(
+    REFILLS_TO_PROCESS
+  );
 
   const [setNextDeliveryDate, { error: setNextError }] = useMutation(SETNEXTDELIVERYDATE);
 
   const [sendReminders, { error: sendRemindersError }] = useMutation(SENDREMINDERS);
+
+  const [processRefills, { error: processRefillsError }] = useMutation(PROCESS_REFILLS);
 
   const setNextDelivery = () => {
     confirm({
@@ -64,11 +73,13 @@ export const Admin = () => {
       title: "Set Next Delivery Dates",
     }).then(async () => {
       try {
+        setDisabled(true);
         await setNextDeliveryDate();
         alert("Finished");
       } catch (err) {
         console.log(err);
       }
+      setDisabled(false);
     });
   };
 
@@ -78,37 +89,75 @@ export const Admin = () => {
       title: "Send out refill reminders",
     }).then(async () => {
       try {
+        setDisabled(true);
         const ret = await sendReminders();
         console.log("return", ret);
+        refetch();
         alert("Finished");
       } catch (err) {
         console.log(err);
       }
+      setDisabled(false);
     });
   };
+
+  const processTheRefills = () => {
+    confirm({
+      description: "Please confirm that you want to process refill orders.",
+      title: "Process Refill Orders",
+    }).then(async () => {
+      try {
+        setDisabled(true);
+        const ret = await processRefills();
+        console.log("return", ret);
+        refetchRefills();
+        alert("Finished");
+      } catch (err) {
+        console.log(err);
+      }
+      setDisabled(false);
+    });
+  };
+
+  if (loadingReminders || loadingRefills) return <div>Loading...</div>;
+
+  console.log("Refills", refills);
 
   return (
     <div className={classes.paper}>
       <ErrorMessage error={setNextError} />
       <ErrorMessage error={sendRemindersError} />
+      <ErrorMessage error={remindersToGoError} />
+      <ErrorMessage error={processRefillsError} />
+      <ErrorMessage error={refillsToProcessError} />
       Admin
-      <div
+      <Button
+        disabled={disabled}
         className={classes.button}
         onClick={() => {
           setNextDelivery();
         }}
       >
         Update Next Delivery Dates
-      </div>
-      <div
+      </Button>
+      <Button
+        disabled={disabled}
         className={classes.button}
         onClick={() => {
           sendOutReminders();
         }}
       >
-        Send out Delivery Reminders
-      </div>
-      <div className={classes.button}>Process Refills</div>
+        Send out Delivery Reminders ({data.remindersToGo.length + 0})
+      </Button>
+      <Button
+        disabled={disabled}
+        className={classes.button}
+        onClick={() => {
+          processTheRefills();
+        }}
+      >
+        Process Refills ({refills.refillsToProcess.length + 0})
+      </Button>
     </div>
   );
 };

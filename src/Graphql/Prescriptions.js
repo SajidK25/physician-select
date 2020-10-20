@@ -8,6 +8,24 @@ export const APPROVE_PRESCRIPTION = gql`
   }
 `;
 
+export const REMINDERS_TO_GO = gql`
+  query {
+    remindersToGo {
+      id
+      status
+    }
+  }
+`;
+
+export const REFILLS_TO_PROCESS = gql`
+  query {
+    refillsToProcess {
+      id
+      status
+    }
+  }
+`;
+
 export const DENY_PRESCRIPTION = gql`
   mutation denyPrescription($id: String!) {
     denyPrescription(id: $id) {
@@ -21,6 +39,12 @@ export const SETNEXTDELIVERYDATE = gql`
     setNextDeliveryDate {
       message
     }
+  }
+`;
+
+export const PROCESS_REFILLS = gql`
+  mutation {
+    processRefills
   }
 `;
 
