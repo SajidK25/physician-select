@@ -112,7 +112,9 @@ export const Prescriptions = ({ status }) => {
       product:
         p.prescription.type === "SUPPLEMENT" ? p.prescription.product.productName : p.prescription.product.display,
       productQuantity:
-        p.prescription.timesPerMonth * p.prescription.shippingInterval * p.prescription.product.pillsPerDose,
+        p.prescription.timesPerMonth *
+        (p.prescription.shippingInterval === 0 ? 1 : p.prescription.shippingInterval) *
+        p.prescription.product.pillsPerDose,
       productDirections: p.prescription.product.directions,
       addon: p.prescription.addon ? p.prescription.addon.display : "",
       addonQuantity: p.prescription.addon
