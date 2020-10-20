@@ -126,6 +126,7 @@ export const Prescriptions = ({ status }) => {
       startDate: formatDate(p.prescription.startDate),
       expireDate: formatDate(p.prescription.expireDate),
       shippedDate: formatDate(p.shipDate),
+      nextDelivery: formatDate(p.prescription.nextDelivery),
       trackingNumber: p.trackingNumber,
     }));
     columns.push({ title: "Name", field: "name" });
@@ -148,6 +149,7 @@ export const Prescriptions = ({ status }) => {
         width: 120,
       });
       columns.push({ title: "Shipped", field: "shippedDate", type: "date", width: 120 });
+      columns.push({ title: "Next", field: "nextDelivery", type: "date", width: 120 });
       columns.push({
         title: "Tracking No",
         field: "trackingNumber",

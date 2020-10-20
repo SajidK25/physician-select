@@ -155,6 +155,7 @@ export const PHARMACYLIST_QUERY = gql`
             approvedDate
             startDate
             expireDate
+            nextDelivery
             refillsRemaining
             product {
               productName
@@ -189,7 +190,7 @@ export const GET_PRESCRIPTION = gql`
         questionnaire
       }
       timesPerMonth
-
+      nextDelivery
       addonTimesPerMonth
       shippingInterval
       amountDue

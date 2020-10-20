@@ -31,6 +31,7 @@ export const ORDERLIST = gql`
         approvedDate
         startDate
         expireDate
+        nextDelivery
         refillsRemaining
         product {
           productName
