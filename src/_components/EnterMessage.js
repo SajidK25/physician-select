@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { useHistory, useLocation } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { NEW_MESSAGE } from "../Graphql";
 // import Link from "@material-ui/core/Link";
-import { RenderStdTextField, ErrorMessage } from "./";
+import { RenderStdTextField } from "./";
 // import { ME_QUERY, LOGIN_MUTATION } from "../Graphql";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +33,6 @@ const validate = (values) => {
 
   return errors;
 };
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const EnterMessage = (props) => {
   const classes = useStyles();
